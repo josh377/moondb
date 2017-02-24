@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}{{ climb.name }}{% endblock title %}
+
+{% block maincontent %}
+
+<link href="{% static 'css/thumbnails.css' %}" rel="stylesheet">
+
+
+<h2>{{ climb.name }}</h2>
+
+<table width="850" border="0">
+	<tr>
+		<td width="280"><b>Official Grade:</b>
+		{{ climb.get_grade_display }}
+		</td>
+		<td width="280">
+		{% if climb.stars != '' %}<b>Global Stars:</b>  <img src="/static/images/{{ climb.stars }}star.jpg" height="20"><br>{% endif %} 
+		</td>
+		<td width="280">
+		{% if global_repeats %}
+		<b>Global Sends:</b> {{ climb.global_repeats }}
+		{% endif %}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Local Grade:</b>
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '13' %}8b{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '12' %}8a+{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '11' %}8a{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '10' %}7c+{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '9' %}7c{% endif %}
+		{% if localgrade.personal_grade__avg >= 8.5 and localgrade.personal_grade__avg < 9.0 %}7b+{% endif %}
+		{% if localgrade.personal_grade__avg >= 8.0 and localgrade.personal_grade__avg < 8.5 %}7b{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '7' %}7a+{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '6' %}7a{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '5' %}6c+{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '4' %}6c{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '3' %}6b+{% endif %}
+		</td>
+		<td>
+		{% if log %}
+		<b>Local Stars:</b> <img src="/static/images/{{ localstars.stars__avg|floatformat:"0" }}star.jpg" height="20">
+		{% endif %}
+		</td>
+		<td>
+		<b>Local Sends:</b> {{ localsends }}
+		</td>
+	</tr>		
+</table>
+<br>
+
+
+
+<table border="0">
+	<tr>
+		<td rowspan=4 width="427" height="660">
+		{% if climb.canvas == True %}
+		<img src="/static/images/climbs/{{ climb.slug }}.png">
+		{% else %}
+		<div style="border: 0px solid; overflow: hidden; margin: 0px auto; margin-top: -50px; max-width: 427px; float: left;">
+		<iframe align="left" scrolling="no" src="http://www.moonboard.com/problems/{{ climb.slug }}/#blog" style="border: 0px solid; margin-left: -20px; height: 657px; width: 427px; margin-top: -50px;">
+		</iframe>
+		</div>
+		{% endif %}
+		</td>
+		<td width="210" height="220">
+		{% if videocount >= 1 %}
+		<div id="overlay"><a class="popup-link-1" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
+		<div id="thumbnail">{{ video.0.url|safe }}</div></div>
+		{% endif %}
+		</td>
+		<td width="210" height="220">
+		{% if videocount >= 2 %}
+		<div id="overlay"><a class="popup-link-2" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
+		<div id="thumbnail">{{ video.1.url|safe }}</div></div>
+		{% endif %}
+		</td>
+	</tr>
+	<tr>
+		<td height="220">
+		{% if videocount >= 3 %}
+		<div id="overlay"><a class="popup-link-3" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
+		<div id="thumbnail">{{ video.2.url|safe }}</div></div>
+		{% endif %}
+		</td>
+		<td height="220">
+		{% if videocount >= 4 %}
+		<div id="overlay"><a class="popup-link-4" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
+		<div id="thumbnail">{{ video.3.url|safe }}</div></div>
+		{% endif %}
+		</td>
+	</tr>
+	<tr>
+		<td height="220">
+		<div id="overlay"><a class="popup-link-5" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
+		<div id="thumbnail">{{ video.4.url|safe }}</div></div>
+		</td>
+		<td height="220">
+		<div id="overlay"><a class="popup-link-6" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
+		<div id="thumbnail">{{ video.5.url|safe }}</div></div>
+		</td>
+	</tr>
+</table>
+
+
+
+<h3>Sends:</h3>
+<table id="sendtable" width="850">
+	<tr bgcolor="eeeeee">
+		<td width="100">
+		Name
+		</td>
+		<td width="100">
+		Date
+		</td>
+		<td width="100">
+		Attempts
+		</td>
+		<td width="100">
+		Grade
+		</td>
+		<td width="100">
+		Stars
+		</td>
+		<td>
+		Comments
+		</td>
+	</tr>
+	{% if log %}{% for log in log %}
+	<tr>
+		<td>
+		<a href="/users/{{ log.user.id }}">{{ log.user }}</a>
+		</td>
+		<td>
+		{{ log.date.month }}/{{ log.date.day }}/{{ log.date.year }}
+		</td>
+		<td> 
+		{{ log.attempts }}
+		</td>
+		<td>
+		{{ log.get_personal_grade_display }}
+		</td>
+		<td>
+		{% if log.stars != '' %}
+		<img src="/static/images/{{ log.stars }}star.jpg" height="20">
+		{% endif %}
+		</td>
+		<td> 
+		{{ log.comments }}
+		</td>
+	</tr>
+	{% endfor %}
+	{% else %}
+	<tr>
+		<td colspan="6">
+		No sends yet! Get on it!
+		</td>
+	</tr>
+	{% endif %}
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="popup-box" id="popup-box-1">
+    <div class="close">X</div>
+    <div class="top">
+        <h2>{{ climb.name }} ({{ climb.get_grade_display }})</h2>
+    </div>
+    <div class="bottom">
+		<center>
+	        {{ video.0.url|safe }}	
+		</center>
+    </div>
+</div>
+
+<div class="popup-box" id="popup-box-2">
+    <div class="close">X</div>
+    <div class="top">
+        <h2>{{ climb.name }} ({{ climb.get_grade_display }})</h2>
+    </div>
+    <div class="bottom">
+		<center>
+	        {{ video.1.url|safe }}	
+		</center>
+    </div>
+</div>
+
+<div class="popup-box" id="popup-box-3">
+    <div class="close">X</div>
+    <div class="top">
+        <h2>{{ climb.name }} ({{ climb.get_grade_display }})</h2>
+    </div>
+    <div class="bottom">
+		<center>
+	        {{ video.2.url|safe }}	
+		</center>
+    </div>
+</div>
+
+<div class="popup-box" id="popup-box-4">
+    <div class="close">X</div>
+    <div class="top">
+        <h2>{{ climb.name }} ({{ climb.get_grade_display }})</h2>
+    </div>
+    <div class="bottom">
+		<center>
+	        {{ video.3.url|safe }}	
+		</center>
+    </div>
+</div>
+
+<div class="popup-box" id="popup-box-5">
+    <div class="close">X</div>
+    <div class="top">
+        <h2>{{ climb.name }} ({{ climb.get_grade_display }})</h2>
+    </div>
+    <div class="bottom">
+		<center>
+	        {{ video.4.url|safe }}	
+		</center>
+    </div>
+</div>
+
+<div class="popup-box" id="popup-box-6">
+    <div class="close">X</div>
+    <div class="top">
+        <h2>{{ climb.name }} ({{ climb.get_grade_display }})</h2>
+    </div>
+    <div class="bottom">
+		<center>
+	        {{ video.5.url|safe }}	
+		</center>
+    </div>
+</div>
+
+
+<script src="{% static "js/jquery-3.1.1.js" %}"></script>
+<script src="{% static "js/popup.js" %}"></script>	
+
+
+
+
+
+{% endblock %}

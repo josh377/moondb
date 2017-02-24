@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}{{ profile.first_name}} {{ profile.last_name }}{% endblock title %}
+{% block maincontent %}
+
+
+<h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+<table width="840" border="0">
+	<tr>
+		<td width="210">
+		<b>Total Sends:</b> {{ totalsends }}
+		</td>
+		<td width="210">
+		<b>Month Sends:</b> {{ thismonthcount }}
+		</td>
+		<td width="210">
+		<b>Month Leaderboard</b>
+		</td>
+		<td width="210">
+		<b>Videos Added:</b> {{ videosadded }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Rank:</b>
+		</td>
+		<td>
+		<b>Rank:</b>
+		</td>
+		<td>
+		<b>Victories:</b>
+		</td>
+		<td>
+		<b>Rank:</b>
+		</td>
+	</tr>
+	<tr height="20">
+	</tr>
+	<tr>
+		<td>
+		<b>Total Points:</b> {{ totalvpoints.personal_grade__sum }}
+		</td>
+		<td>
+		<b>Month Points:</b> {{ thismonthpoints.personal_grade__sum }}
+		</td>
+		<td>
+		
+		</td>
+		<td>
+		</td>
+	</tr>	
+	<tr>
+		<td>
+		<b>Rank:</b>
+		</td>
+		<td>
+		<b>Rank:</b>
+		</td>
+		<td>
+		</td>
+		<td>
+		</td>
+	</tr>	
+</table>
+
+
+
+
+<h3>Sends:</h3>
+<table id="sendtable" width="850">
+	<tr bgcolor="eeeeee">
+		<td width="100">
+		Climb
+		</td>
+		<td width="100">
+		Grade
+		</td>
+		<td width="100">
+		Date
+		</td>
+		<td width="100">
+		Attempts
+		</td>
+		<td width="100">
+		Stars
+		</td>
+		<td>
+		Comments
+		</td>
+	</tr>
+{% for log in log %}
+	<tr>
+		<td>
+		<a href="/climbs/{{ log.climb.slug }}/">{{ log.climb.name }}</a>
+		</td>
+		<td>
+		{% if log.personal_grade == '13' %}8b{% endif %}
+		{% if log.personal_grade == '12' %}8a+{% endif %}
+		{% if log.personal_grade == '11' %}8a{% endif %}
+		{% if log.personal_grade == '10' %}7c+{% endif %}
+		{% if log.personal_grade == '9' %}7c{% endif %}
+		{% if log.personal_grade == '8.25' %}7b+{% endif %}
+		{% if log.personal_grade == '7.75' %}7b{% endif %}
+		{% if log.personal_grade == '7' %}7a+{% endif %}
+		{% if log.personal_grade == '6' %}7a{% endif %}
+		{% if log.personal_grade == '5' %}6c+{% endif %}
+		{% if log.personal_grade == '4' %}6c{% endif %}
+		{% if log.personal_grade == '3' %}6b+{% endif %}
+		</td>
+		<td>
+		Fix Date
+		</td>
+		<td> 
+		{{ log.attempts }}
+		</td>
+		<td>
+		<img src="/static/images/{{ log.stars }}star.jpg" height="20">
+		</td>
+		<td>
+		{{ log.comments }}
+		</td>
+	</tr>
+		
+		{% endfor %}
+</table>
+<br>
+<h3>Charts:</h3>
+<br>
+<table width="360" height="200" id="sendcharttable">
+	<tr height="30">
+		<td colspan="12" align="center">
+		<h5><b>Total Sends</b></h5>
+		</td>
+	</tr>
+	<tr>
+		<td valign="bottom">
+			<div id="6b+" style="height: {{ sends6bplus }}0px; width: 30px; background-color: #33ff33; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends6bplus > 0 %}{{ sends6bplus }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="6c" style="height: {{ sends6c }}0px; width: 30px; background-color: #0aff0a; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends6c > 0 %}{{ sends6c }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="6c+" style="height: {{ sends6cplus }}0px; width: 30px; background-color: #00f500; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends6cplus > 0 %}{{ sends6cplus }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="7a" style="height: {{ sends7a }}0px; width: 30px; background-color: #00cc00; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends7a > 0 %}{{ sends7a }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="7a+" style="height: {{ sends7aplus }}0px; width: 30px; background-color: #ffff5c; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends7aplus > 0 %}{{ sends7aplus }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="7b" style="height: {{ sends7b }}0px; width: 30px; background-color: #ffff00; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends7b > 0 %}{{ sends7b }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="7b+" style="height: {{ sends7bplus }}0px; width: 30px; background-color: #f5f500; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends7bplus > 0 %}{{ sends7bplus }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="7c" style="height: {{ sends7c }}0px; width: 30px; background-color: #cccc00; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends7c > 0 %}{{ sends7c }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="7c+" style="height: {{ sends7cplus }}0px; width: 30px; background-color: #ff0000; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends7cplus > 0 %}{{ sends7cplus }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="8a" style="height: {{ sends8a }}0px; width: 30px; background-color: #e00000; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends8a > 0 %}{{ sends8a }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="8a+" style="height: {{ sends8aplus }}0px; width: 30px; background-color: #b80000; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends8aplus > 0 %}{{ sends8aplus }}{% endif %}
+			</div>
+		</td>
+		<td valign="bottom">
+			<div id="8b" style="height: {{ sends8b }}0px; width: 30px; background-color: #8f0000; display: table-cell; vertical-align: middle; text-align: center">
+			{% if sends8b > 0 %}{{ sends8b }}{% endif %}
+			</div>
+		</td>		
+	</tr>
+	<tr height="1" bgcolor="000000">
+		<td colspan="12">
+		</td>
+	</tr>
+	<tr height="40">
+		<td width="30" class="sendchartgrade">
+		6b+
+		</td>
+		<td width="30" class="sendchartgrade">
+		6c
+		</td>
+		<td width="30" class="sendchartgrade">
+		6c+
+		</td>
+		<td width="30" class="sendchartgrade">
+		7a
+		</td>
+		<td width="30" class="sendchartgrade">
+		7a+
+		</td>
+		<td width="30" class="sendchartgrade">
+		7b
+		</td>
+		<td width="30" class="sendchartgrade">
+		7b+
+		</td>
+		<td width="30" class="sendchartgrade">
+		7c
+		</td>
+		<td width="30" class="sendchartgrade">
+		7c+
+		</td>
+		<td width="30" class="sendchartgrade">
+		8a
+		</td>
+		<td width="30" class="sendchartgrade">
+		8a+
+		</td>
+		<td width="30" class="sendchartgrade">
+		8b
+		</td>
+	</tr>
+</table>
+{% endblock %}

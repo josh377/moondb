@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}New Climb{% endblock title %}
+{% block maincontent %}
+
+<h2>New Climb</h2>
+<form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+	
+{% endblock %}

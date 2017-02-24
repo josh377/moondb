@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}User List{% endblock title %}
+{% block maincontent %}
+
+
+<h2>User List</h2>
+
+
+
+{% for users in users %}
+<a href="/users/{{ users.id }}">{{ users.first_name }}</a><br>
+{% endfor %}
+
+{% endblock %}
