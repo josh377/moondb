@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, reverse
 from collection.models import Climb, Video, UserLog
 from django.db.models import Count, Avg, Sum
-from collection.forms import NewClimb, LogClimb, AddVideo, EditClimb
+from collection.forms import NewClimb, LogClimb, AddVideo, EditClimb, EditUserDetails, EditSend
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
+from django import forms
 
 @login_required	
 def home(request):
@@ -19,6 +20,7 @@ def home(request):
 
 @login_required	
 def climb_detail(request, slug):
+	currentuser = request.user
 	climb = Climb.objects.get(slug=slug)
 	video = Video.objects.filter(climb__slug=slug)
 	videocount = Video.objects.filter(climb__slug=slug).count()
@@ -34,6 +36,7 @@ def climb_detail(request, slug):
 		'video': video,
 		'log': log,
 		'videocount': videocount,
+		'currentuser': currentuser,
 })
 
 
@@ -83,7 +86,8 @@ def add_video(request):
 @login_required	
 def user_profile(request, uid):
 	profile = User.objects.get(id=uid)
-	log = UserLog.objects.filter(user__id=uid).order_by('personal_grade', 'date')
+	currentuser = request.user
+	log = UserLog.objects.filter(user__id=uid).order_by('-personal_grade', 'date')
 	totalsends = UserLog.objects.filter(user__id=uid).count()
 	totalvpoints = UserLog.objects.filter(user__id=uid).aggregate(Sum('personal_grade'))
 	this_month = datetime.now().month
@@ -122,6 +126,7 @@ def user_profile(request, uid):
 		'sends6c': sends6c,
 		'sends6bplus': sends6bplus,
 		'videosadded': videosadded,
+		'currentuser': currentuser,
 })
 
 @login_required	
@@ -200,6 +205,79 @@ def edit_climb(request,slug):
 		'climb': climb,
 		'form': form,
 		
+		
+})
+
+@login_required	
+def send_detail(request, sendid):
+	send = UserLog.objects.get(id=sendid)
+	return render(request, 'sends/send_detail.html', {
+		'send': send,
+})
+
+@login_required	
+def edit_send(request, sendid):
+	currentuser = request.user
+	send = UserLog.objects.get(id=sendid)
+	if send.user.id == currentuser.id or currentuser.id == 1:
+		form_class = EditSend
+		if request.method == 'POST':
+			form = form_class(data=request.POST, instance=send)
+			if form.is_valid():
+				form.save()
+				return redirect('climb_detail', slug=send.climb.slug)
+		else:
+			form = form_class(instance=send)
+		return render(request, 'sends/edit_send.html', {
+			'form': form,
+			'send': send,
+		})
+	else:
+		return render(request, 'index.html')
+
+		
+
+@login_required	
+def delete_send(request, sendid):
+	currentuser = request.user
+	send = UserLog.objects.get(id=sendid)
+	if send.user.id == currentuser.id or currentuser.id == 1:
+		return render(request, 'sends/delete_send.html', {
+			'send': send,
+		})
+	else:
+		return render(request, 'index.html')
+		
+		
+@login_required	
+def delete_confirm(request, sendid):
+	currentuser = request.user
+	send = UserLog.objects.get(id=sendid).delete()
+	return redirect('user_profile', uid=currentuser.id)
+	
+
+
+@login_required
+def user_details(request):
+	currentuser = request.user
+	return render(request, 'user_details.html', {
+		'currentuser': currentuser,
+})
+
+@login_required
+def edit_details(request):
+	user = request.user.userdetails
+	form_class = EditUserDetails
+	if request.method == 'POST':
+		form = form_class(data=request.POST, instance=user)
+		if form.is_valid():
+			form.save()
+			return redirect('user_details')
+	else:
+		form = form_class(instance=user)
+	return render(request, "edit_user_details.html", {
+		'form': form,
+		'user': user,
 })
 
 
@@ -207,3 +285,4 @@ def edit_climb(request,slug):
 def logout_view(request):
 	logout(request)
 	return render(request, 'registration/logout.html')
+

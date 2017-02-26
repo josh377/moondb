@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Edit Climb Details{% endblock title %}
+
+{% block maincontent %}
+
+<h2>Edit Climb Details</h2>
+<a href="http://www.moonboard.com/problems/{{ climb.slug }}/" target="_blank">[Official Moonboard.com link]</a><br><br>
+
+
+<form method="POST" action="/climbs/{{ climb.slug }}/edit/" class="" />
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+
+	
+	
+{% endblock %}

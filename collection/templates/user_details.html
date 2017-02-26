@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}User Details{% endblock title %}
+
+{% block maincontent %}
+
+<h2>{{ currentuser.userdetails.first_name }} {{ currentuser.userdetails.last_name }}</h2>
+<a href="edit/">[Edit Profile]</a>&#160&#160&#160<a href="/accounts/password_change/">[Change Password]</a><br><br>
+<b>Location: </b>{{ currentuser.userdetails.location }}<br><br>
+<b>Moonboard Location: </b>{{ currentuser.userdetails.moonboardlocation }}<br><br>
+<b>Height: </b>{{ currentuser.userdetails.height }}<br><br>
+<b>Weight: </b>{{ currentuser.userdetails.weight }}<br><br>
+<b>Ape Index: </b>{{ currentuser.userdetails.ape_index }}
+<br><br><br>
+
+
+	
+	
+{% endblock %}

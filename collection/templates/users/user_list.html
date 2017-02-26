@@ -9,7 +9,12 @@
 
 
 {% for users in users %}
-<a href="/users/{{ users.id }}">{{ users.first_name }}</a><br>
+<a href="/users/{{ users.id }}">
+{% if users.userdetails.first_name %}
+{{ users.userdetails.first_name }} {{ users.userdetails.last_name }}
+{% else %}
+{{ users }}
+{% endif %}</a><br>
 {% endfor %}
 
 {% endblock %}

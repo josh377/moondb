@@ -1,5 +1,7 @@
 from django.contrib import admin
-from collection.models import Climb, Video, UserLog
+from collection.models import Climb, Video, UserLog, UserDetails
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
 
 class ClimbAdmin(admin.ModelAdmin):
     model = Climb
@@ -20,7 +22,7 @@ admin.site.register(Video, VideoAdmin)
 
 class UserLogAdmin(admin.ModelAdmin):
 	model = UserLog
-	list_display = ('user', 'climb', 'date')
+	list_display = ('user', 'climb')
 	def formfield_for_foreignkey(self, db_field, request, **kwargs):
 		if db_field.name == "climb":
 			kwargs["queryset"] = Climb.objects.order_by('name')
@@ -28,3 +30,14 @@ class UserLogAdmin(admin.ModelAdmin):
 	
 admin.site.register(UserLog, UserLogAdmin)
 
+
+class UserDetailsInline(admin.StackedInline):
+    model = UserDetails
+    can_delete = False
+    verbose_name_plural = 'userdetails'
+
+class UserAdmin(BaseUserAdmin):
+    inlines = (UserDetailsInline, )
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)

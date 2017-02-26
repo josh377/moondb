@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block title %}Log Climb{% endblock title %}
+{% block title %}Edit Climb Details{% endblock title %}
+
 {% block maincontent %}
 
 <script>
@@ -9,8 +10,13 @@
   } );
   </script>
 
-<h2>Log Climb</h2>
-<form method="POST" class="post-form">
+<h2>Edit Climb Details</h2>
+<a href="/sends/{{ send.id }}/delete">[Delete this send]</a>
+<br><br>
+
+
+
+<form method="POST" action="/sends/{{ send.id }}/edit/" class="" />
     {% csrf_token %}
 	Climb: {{ form.climb }}<br><br>
 	Date: <input id="datepicker" name="date" type="text" required /><br><br>
@@ -18,11 +24,17 @@
 	Personal Grade: {{ form.personal_grade }}<br><br>
 	Stars: {{ form.stars }}<br><br>
 	Comments: {{ form.comments }}<br><br>
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
 	
-	
-	
+    
+    <button type="submit">Save</button>
+</form>
+<br><br>
+
+
+
+
+
+
 
 	
 	

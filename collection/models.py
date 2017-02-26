@@ -23,7 +23,7 @@ class Climb(models.Model):
 		(0, '0'),
 	)
 	name = models.CharField(max_length=255, unique=True)
-	grade = models.IntegerField(choices=GRADES)
+	grade = models.IntegerField("Global Grade", choices=GRADES)
 	stars = models.IntegerField(choices=STARS, null=True)
 	global_repeats = models.CharField(max_length=255, blank=True)
 	slug = models.SlugField(unique=True)
@@ -78,9 +78,20 @@ class UserLog(models.Model):
 	personal_grade = models.IntegerField(choices=GRADES)
 	stars = models.IntegerField(choices=STARS)
 	comments = models.TextField(blank=True)
-	date = models.DateTimeField(auto_now_add=True)
+	date = models.DateField()
 	def __str__(self):
 		return "%s %s" % (self.user, self.climb)
+		
+		
+class UserDetails(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	first_name = models.CharField(max_length=255)
+	last_name = models.CharField(max_length=255)
+	location = models.CharField(max_length=255, blank=True)
+	height = models.CharField(max_length=255, blank=True)
+	weight = models.CharField(max_length=255, blank=True)
+	ape_index = models.CharField("Ape Index", max_length=255, blank=True)
+	moonboardlocation = models.CharField("Moonboard Location", max_length=255, blank=True)
 	
 		
 

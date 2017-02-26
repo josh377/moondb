@@ -69,16 +69,16 @@
 <h3>Sends:</h3>
 <table id="sendtable" width="850">
 	<tr bgcolor="eeeeee">
-		<td width="125">
+		<td width="175">
 		Climb
 		</td>
 		<td width="75">
 		Grade
 		</td>
-		<td width="100">
+		<td width="75">
 		Date
 		</td>
-		<td width="100">
+		<td width="90">
 		Attempts
 		</td>
 		<td width="100">
@@ -91,13 +91,13 @@
 {% for log in log %}
 	<tr>
 		<td>
-		<a href="/climbs/{{ log.climb.slug }}/">{{ log.climb.name }}</a>
+		<a href="/climbs/{{ log.climb.slug }}/">{{ log.climb.name }} ({{ log.climb.get_grade_display }})</a>
 		</td>
 		<td>
 		{{ log.get_personal_grade_display }}
 		</td>
 		<td>
-		{{ log.date.month }}/{{ log.date.day }}/{{ log.date.year }}
+		{{ log.date|date:"n/j/y" }}
 		</td>
 		<td> 
 		{{ log.attempts }}
@@ -106,7 +106,7 @@
 		<img src="/static/images/{{ log.stars }}star.jpg" height="20">
 		</td>
 		<td>
-		{{ log.comments }}
+		{{ log.comments }} {% if currentuser.id == profile.id or currentuser.id == 1 %}&#160&#160&#160<a href="/sends/{{ log.id }}/edit">[Edit this send]</a>{% endif %}
 		</td>
 	</tr>
 		

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Edit Climb Details{% endblock title %}
+
+{% block maincontent %}
+
+<h2>Delete Send</h2>
+<br>
+<b>User:</b> {{ send.user.userdetails.first_name }} {{ send.user.userdetails.last_name }}<br>
+<b>Climb:</b> {{ send.climb }}<br>
+<b>Grade:</b> {{ send.get_personal_grade_display }}<br>
+<b>Attempts:</b> {{ send.attempts }}<br>
+<b>Stars:</b> {{ send.stars }}<br>
+<b>Date:</b> {{ send.date|date:"n/j/y" }}<br>
+<b>Comments:</b> {{ send.comments }}<br><br>
+
+<h3> Are you sure?</h3>
+Click <a href="confirm/">here</a> to confirm delete of this send.
+
+
+
+
+	
+	
+{% endblock %}

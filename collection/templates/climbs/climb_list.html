@@ -106,7 +106,7 @@
 					<td width=80%>
 					<a data-toggle="collapse" href="#collapse{{ climb.id }}"><font color="#000000">{{ climb.name }} ({{ climb.get_grade_display }})</font></a>
 					</td>
-					<td><a data-toggle="collapse" href="#collapse{{ climb.id }}"><font color="#000000">Videos: {{ climb.videocount }}</font></a>
+					<td><a href="/climbs/{{ climb.slug }}"><font color="#000000">Videos: {{ climb.videocount }}</font></a>
 					</td>
 				</tr>
 			</table>
@@ -131,7 +131,7 @@
 	</tr>
 	<tr>
 		<td valign="top"><b>Global Grade:</b> {{ climb.get_grade_display }}<br>
-		<br>{% if climb.stars %}<b>Global Stars:</b> {{ climb.stars }}<br>{% endif %}
+		<br>{% if climb.stars != NULL %}<b>Global Stars:</b>  <img src="/static/images/{{ climb.stars }}star.jpg" height="20">{% endif %}<br>
 		<br><br><br>
 		<b>Local Grade:</b> {% if climb.gradeavg|floatformat:"0" == '13' %}8b{% endif %}
 		{% if climb.gradeavg|floatformat:"0" == '12' %}8a+{% endif %}

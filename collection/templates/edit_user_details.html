@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Edit User Details{% endblock title %}
+
+{% block maincontent %}
+
+<h2>Edit User Details</h2>
+<br>
+
+<form method="POST" action="/user_details/edit/" class="" />
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+
+	
+	
+{% endblock %}
