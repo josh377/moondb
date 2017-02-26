@@ -7,7 +7,13 @@ from datetime import datetime, timedelta
 
 
 def home(request):
-	return render(request, 'index.html')
+	recent_sends = UserLog.objects.order_by('-date')
+	recent_videos = Video.objects.order_by('-date')
+	return render(request, 'index.html', {
+		'recent_sends': recent_sends,
+		'recent_videos': recent_videos,
+		
+})
 
 
 def climb_detail(request, slug):
@@ -141,15 +147,18 @@ def user_list(request):
 })
 
 def climb_list(request):
-	qs = Climb.objects.all()
 	userlist = User.objects.order_by('id')
 	currentuser = request.user
 	if request.GET:
+		qs = Climb.objects.all()
+		qs = qs.annotate(videocount=Count('video', distinct=True)).annotate(starsavg=Avg('userlog__stars', distinct=True)).annotate(gradeavg=Avg('userlog__personal_grade', distinct=True)).annotate(localrepeats=Count('userlog'))
+		climbheader = 'Climbs'
 		searchname = request.GET.get('name', '')
 		searchgrade = request.GET.get('grade', '')
 		searchsentby = request.GET.get('sentby', '')
 		searchexcludemine = request.GET.get('excludemine', '')
 		searchglobalstars = request.GET.get('globalstars', '')
+		searchlocalstars = request.GET.get('localstars', '')
 		searchsort = request.GET.get('sortby', '')
 		if searchname:
 			qs = qs.filter(name__icontains=searchname)
@@ -161,15 +170,33 @@ def climb_list(request):
 			qs = qs.exclude(userlog__user_id=currentuser)
 		if searchglobalstars:
 			qs = qs.filter(stars=searchglobalstars)
+		if searchlocalstars == '3':
+			qs = qs.filter(starsavg__gte=3)
+		if searchlocalstars == '2':
+			qs = qs.filter(starsavg__gte=2)
+		if searchlocalstars == '1':
+			qs = qs.filter(starsavg__gte=1)
 		if searchsort == 'sortgrade':
 			qs = qs.order_by('-grade')
 		if searchsort == 'sortname':
 			qs = qs.order_by('name')
+		if searchsort == 'sortlocalrepeats':
+			qs = qs.order_by('-localrepeats')
+		if searchsort == 'sortlocalstars':
+			qs = qs.order_by('-starsavg')
+		if searchsort == 'sortvideos':
+			qs = qs.order_by('-videocount')
+	else:
+		qs = Climb.objects.none()
+		climbheader = ''
 		
 	return render(request, 'climbs/climb_list.html', {
-		'climblist': qs,
+		'climb': qs,
 		'userlist': userlist,
+		'climbheader': climbheader,
 })
 
 
-
+def edit_profile(request):
+    user_profile = request.user.profile()
+    url = user_profile.url

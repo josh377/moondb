@@ -20,11 +20,22 @@ class LogClimb(forms.ModelForm):
 	class Meta:
 		model = UserLog
 		fields = ('climb', 'attempts', 'personal_grade', 'stars', 'comments')
+	def __init__(self, *args, **kwargs):
+		super(LogClimb, self).__init__(*args, **kwargs)   
+		self.fields['climb'].queryset = Climb.objects.order_by('name')
 		
 class AddVideo(forms.ModelForm):
 	class Meta:
 		model = Video
 		fields = ('climb', 'url',)
+	def __init__(self, *args, **kwargs):
+		super(AddVideo, self).__init__(*args, **kwargs)   
+		self.fields['climb'].queryset = Climb.objects.order_by('name')	
+
+		
+
+
+		
 		
 
 

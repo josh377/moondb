@@ -108,7 +108,7 @@
 		{% if log.personal_grade == '3' %}6b+{% endif %}
 		</td>
 		<td>
-		Fix Date
+		{{ log.date.month }}/{{ log.date.day }}/{{ log.date.year }}
 		</td>
 		<td> 
 		{{ log.attempts }}

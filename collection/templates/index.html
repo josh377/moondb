@@ -5,16 +5,29 @@
 {% block maincontent %}
 
 
+<font size=4><b>Recent Sends:</b></font><br>
+<ul>
+{% for recent_sends in recent_sends|slice:":10" %}
+<li><a href="/users/{{ recent_sends.user.id }}">{{ recent_sends.user.first_name }}</a> sent <a href="/climbs/{{ recent_sends.climb.slug }}/">{{ recent_sends.climb.name }} ({{ recent_sends.climb.get_grade_display }})</a> on {{ recent_sends.date.month }}/{{ recent_sends.date.day }}/{{ recent_sends.date.year }}</li>
+{% endfor %}
+</ul>
 
-<h2>Home</h2>
 <br><br>
-<ul>Features to add:
-<li>Update log/recent send list</li>
+<font size=4><b>Recent Videos:</b></font><br>
+<ul>
+{% for recent_videos in recent_videos|slice:":10" %}
+<li><a href="/users/{{ recent_videos.user.id }}">{{ recent_videos.uploaded_by.first_name }}</a> added a video to <a href="/climbs/{{ recent_videos.climb.slug }}/">{{ recent_videos.climb.name }} ({{ recent_videos.climb.get_grade_display }})</a> on {{ recent_videos.date.month }}/{{ recent_videos.date.day }}/{{ recent_videos.date.year }}</li>
+{% endfor %}
+</ul>
+
+<br><br>
+<font size=4><b>Features to add:</b></font>
+<ul>
 <li>Recommendations</li>
 <li>Most sends/most videos/other stats</li>
 <li>Edit of send</li>
 <li>Make forms prettier</li>
-<li>Add local stars/grade to search</li>
+<li>Add Profile/Logout page</li>
 </ul>
 
 

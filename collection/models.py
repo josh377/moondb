@@ -17,20 +17,22 @@ class Climb(models.Model):
 		(3, '6b+'),
 	)
 	STARS = (
-		('3', '3'),
-		('2', '2'),
-		('1', '1'),
-		('0', '0'),
+		(3, '3'),
+		(2, '2'),
+		(1, '1'),
+		(0, '0'),
 	)
 	name = models.CharField(max_length=255, unique=True)
 	grade = models.IntegerField(choices=GRADES)
-	stars = models.CharField(max_length=255, choices=STARS, blank=True)
+	stars = models.IntegerField(choices=STARS, null=True)
 	global_repeats = models.CharField(max_length=255, blank=True)
 	slug = models.SlugField(unique=True)
 	date = models.DateTimeField(auto_now_add=True)
 	canvas = models.BooleanField(default=False)
 	def __str__(self):
 		return '%s %s' % (self.name, self.get_grade_display())
+		
+
 
 	
 class Video(models.Model):
@@ -40,7 +42,7 @@ class Video(models.Model):
 	date = models.DateTimeField(auto_now_add=True)
 	def __str__(self):
 		return "%s" % (self.climb)
-	
+
 
 class UserLog(models.Model):
 	GRADES = (
@@ -58,10 +60,10 @@ class UserLog(models.Model):
 		(3, '6b+'),
 	)
 	STARS = (
-		('3', '3'),
-		('2', '2'),
-		('1', '1'),
-		('0', '0'),
+		(3, '3'),
+		(2, '2'),
+		(1, '1'),
+		(0, '0'),
 	)
 	ATTEMPTS = (
 		('More than 3', 'More than 3'),
@@ -73,9 +75,14 @@ class UserLog(models.Model):
 	climb = models.ForeignKey(Climb, on_delete=models.CASCADE)
 	attempts = models.CharField(max_length=255, choices=ATTEMPTS, blank=True)
 	personal_grade = models.IntegerField(choices=GRADES)
-	stars = models.CharField(max_length=255, choices=STARS)
+	stars = models.IntegerField(choices=STARS)
 	comments = models.TextField(blank=True)
 	date = models.DateTimeField(auto_now_add=True)
 	def __str__(self):
 		return "%s %s" % (self.user, self.climb)
+	
+		
+
+
+	
 	

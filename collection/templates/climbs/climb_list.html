@@ -3,6 +3,9 @@
 {% block title %}Climb List{% endblock title %}
 
 {% block maincontent %}
+
+<!----------Start Search Table----------->
+
 <h2>Search:</h2>
 
 <div class="panel panel-default">
@@ -43,7 +46,12 @@
 		</select></h5>
 		</td>
 		<td>
-		
+		<h5>Local Stars: <select name="localstars">
+		<option value="" selected>All</option>
+		<option value="3">3 stars</option>
+		<option value="2">2 stars (or more)</option>
+		<option value="1">1 star (or more)</option)
+		</select></h5>
 		</td>
 	</tr>
 	<tr>
@@ -62,7 +70,9 @@
 		<td>
 		<h5>Sort By: <select name="sortby">
 		<option value="sortgrade" selected>Grade</option>
-		<option value="sortname">Name</option>
+		<option value="sortlocalrepeats">Most Local Repeats</option>
+		<option value="sortlocalstars">Highest Local Rating</option>
+		<option value="sortvideos">Most Videos</option>
 		</select></h5>
 		</td>
 	</tr>
@@ -81,18 +91,86 @@
 </div>
 </div>
 
-<h2>Climbs</h2>
-{% for climblist in climblist %}
+
+
+<!----------End Search Table----------->
+
+<h2>{{ climbheader }}</h2>
+{% for climb in climb %}
 <div class="panel-group">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapse{{ climblist.id }}">{{ climblist.name }}</a>
+        <table width=100% border=0>
+				<tr>
+					<td width=80%>
+					<a data-toggle="collapse" href="#collapse{{ climb.id }}"><font color="#000000">{{ climb.name }} ({{ climb.get_grade_display }})</font></a>
+					</td>
+					<td><a data-toggle="collapse" href="#collapse{{ climb.id }}"><font color="#000000">Videos: {{ climb.videocount }}</font></a>
+					</td>
+				</tr>
+			</table>
       </h4>
     </div>
-    <div id="collapse{{ climblist.id }}" class="panel-collapse collapse">
-      <a href="/climbs/{{ climblist.slug }}">{{ climblist.name }}</a>
-      <div class="panel-footer">Panel Footer</div>
+    <div id="collapse{{ climb.id }}" class="panel-collapse collapse">
+			<br>
+			
+
+<table border="0" width=100% height="520">
+	<tr>
+		<td rowspan="5" width="427" align="center">
+		{% if climb.canvas == True %}
+		<img src="/static/images/climbs/{{ climb.slug }}.png" height="500">
+		{% else %}
+		<div style="border: 0px solid; overflow: hidden; margin: 0px auto; margin-top: 0px; margin-left: 15px; max-width: 427px; float: left;">
+		<iframe align="left" scrolling="no" src="http://www.moonboard.com/problems/{{ climb.slug }}/#blog" style="-ms-zoom: 0.75; -moz-transform: scale(0.75); -moz-transform-origin: 0 0; -o-transform: scale(0.75); -o-transform-origin: 0 0; -webkit-transform: scale(0.75); -webkit-transform-origin: 0 0;border: 0px solid; margin-left: -20px; height: 660px; width: 427px; margin-top: -40px;">
+		</iframe>
+		</div>
+		{% endif %}
+		</td>
+	</tr>
+	<tr>
+		<td valign="top"><b>Global Grade:</b> {{ climb.get_grade_display }}<br>
+		<br>{% if climb.stars %}<b>Global Stars:</b> {{ climb.stars }}<br>{% endif %}
+		<br><br><br>
+		<b>Local Grade:</b> {% if climb.gradeavg|floatformat:"0" == '13' %}8b{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '12' %}8a+{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '11' %}8a{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '10' %}7c+{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '9' %}7c{% endif %}
+		{% if climb.gradeavg >= 8.5 and climb.gradeavg < 9.0 %}7b+{% endif %}
+		{% if climb.gradeavg >= 8.0 and climb.gradeavg < 8.5 %}7b{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '7' %}7a+{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '6' %}7a{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '5' %}6c+{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '4' %}6c{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '3' %}6b+{% endif %}
+		
+		<br>
+		
+		<br><b>Local Stars:</b> {{ climb.starsavg }}
+		<br><br><br>
+		<b>Local Sends:</b> {{ climb.localrepeats }}
+		<br><br><b>Sent By: </b>Fix this later
+		<br><br><br><br><a href="/climbs/{{ climb.slug }}">Videos: {{ climb.videocount }}</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+	</tr>
+</table>
+				
+					
+      <div class="panel-footer"><a href="/climbs/{{ climb.slug }}">More Details...</a></div>
     </div>
   </div>
 </div>
@@ -105,10 +183,4 @@
 {% endfor %}
 
         
-        
-		
-		{% for test in test %}{{ test.name }}<br>{% endfor %}
-		
-
-
 {% endblock %}

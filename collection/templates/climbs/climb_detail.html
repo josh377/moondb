@@ -15,7 +15,7 @@
 		{{ climb.get_grade_display }}
 		</td>
 		<td width="280">
-		{% if climb.stars != '' %}<b>Global Stars:</b>  <img src="/static/images/{{ climb.stars }}star.jpg" height="20"><br>{% endif %} 
+		{% if climb.stars != NULL %}<b>Global Stars:</b>  <img src="/static/images/{{ climb.stars }}star.jpg" height="20"><br>{% endif %} 
 		</td>
 		<td width="280">
 		{% if global_repeats %}
