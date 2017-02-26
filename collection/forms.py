@@ -31,6 +31,11 @@ class AddVideo(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(AddVideo, self).__init__(*args, **kwargs)   
 		self.fields['climb'].queryset = Climb.objects.order_by('name')	
+		
+class EditClimb(ModelForm):
+	class Meta:
+		model = Climb
+		fields = ('name', 'grade', 'stars', 'global_repeats')
 
 		
 

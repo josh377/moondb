@@ -151,7 +151,12 @@
 		<br><b>Local Stars:</b> {{ climb.starsavg }}
 		<br><br><br>
 		<b>Local Sends:</b> {{ climb.localrepeats }}
-		<br><br><b>Sent By: </b>Fix this later
+		<br><br><b>Sent By: </b>
+		{% if climb.users.all %}
+		{% for user in climb.users.all %}
+		<a href="/users/{{ user.id }}">{{ user.first_name }}</a>
+		{% endfor %}
+		{% else %}No local sends! Get on it!{% endif %}
 		<br><br><br><br><a href="/climbs/{{ climb.slug }}">Videos: {{ climb.videocount }}</a>
 		</td>
 	</tr>

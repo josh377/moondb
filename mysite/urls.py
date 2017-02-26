@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from collection import views
+from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 
 
@@ -23,7 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^$', views.home, name='home'),
 	url(r'^climbs/(?P<slug>[-\w]+)/$', views.climb_detail, name='climb_detail'),
-	url(r'^climbs/condensed/(?P<slug>[-\w]+)/$', views.climb_detail_condensed, name='climb_detail_condensed'),
+	url(r'^climbs/(?P<slug>[-\w]+)/edit/$', views.edit_climb, name='edit_climb'),
 	url(r'^climb_list/$', views.climb_list, name='climb_list'),
 	url(r'^new_climb/$', views.new_climb, name='new_climb'),
 	url(r'^log_climb/$', views.log_climb, name='log_climb'),
@@ -31,4 +32,7 @@ urlpatterns = [
 	url(r'^user_list/$', views.user_list, name='user_list'),
 	url(r'^users/(?P<uid>\d+)/$', views.user_profile, name='user_profile'),
 	url(r'^accounts/', include('django.contrib.auth.urls')),
+	url(r'^login/$', auth_views.login, name='login'),
+	url(r'^registration/logout', views.logout_view, name='logout'),
+	url(r'^directions/$', TemplateView.as_view(template_name='directions.html'), name='directions'),
 ]

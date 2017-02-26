@@ -5,10 +5,14 @@
 {% block maincontent %}
 
 <h2>Add Video</h2>
+
 <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
+	
+	<br>
+	Click <a href="/directions" target="_blank">here</a> for instructions on how to add a video.<br><br>
 
 	
 	

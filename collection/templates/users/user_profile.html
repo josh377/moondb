@@ -69,10 +69,10 @@
 <h3>Sends:</h3>
 <table id="sendtable" width="850">
 	<tr bgcolor="eeeeee">
-		<td width="100">
+		<td width="125">
 		Climb
 		</td>
-		<td width="100">
+		<td width="75">
 		Grade
 		</td>
 		<td width="100">
@@ -94,18 +94,7 @@
 		<a href="/climbs/{{ log.climb.slug }}/">{{ log.climb.name }}</a>
 		</td>
 		<td>
-		{% if log.personal_grade == '13' %}8b{% endif %}
-		{% if log.personal_grade == '12' %}8a+{% endif %}
-		{% if log.personal_grade == '11' %}8a{% endif %}
-		{% if log.personal_grade == '10' %}7c+{% endif %}
-		{% if log.personal_grade == '9' %}7c{% endif %}
-		{% if log.personal_grade == '8.25' %}7b+{% endif %}
-		{% if log.personal_grade == '7.75' %}7b{% endif %}
-		{% if log.personal_grade == '7' %}7a+{% endif %}
-		{% if log.personal_grade == '6' %}7a{% endif %}
-		{% if log.personal_grade == '5' %}6c+{% endif %}
-		{% if log.personal_grade == '4' %}6c{% endif %}
-		{% if log.personal_grade == '3' %}6b+{% endif %}
+		{{ log.get_personal_grade_display }}
 		</td>
 		<td>
 		{{ log.date.month }}/{{ log.date.day }}/{{ log.date.year }}

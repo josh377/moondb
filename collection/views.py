@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, reverse
 from collection.models import Climb, Video, UserLog
 from django.db.models import Count, Avg, Sum
-from collection.forms import NewClimb, LogClimb, AddVideo
+from collection.forms import NewClimb, LogClimb, AddVideo, EditClimb
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 
-
+@login_required	
 def home(request):
 	recent_sends = UserLog.objects.order_by('-date')
 	recent_videos = Video.objects.order_by('-date')
@@ -15,7 +17,7 @@ def home(request):
 		
 })
 
-
+@login_required	
 def climb_detail(request, slug):
 	climb = Climb.objects.get(slug=slug)
 	video = Video.objects.filter(climb__slug=slug)
@@ -34,26 +36,9 @@ def climb_detail(request, slug):
 		'videocount': videocount,
 })
 
-def climb_detail_condensed(request, slug):
-	climb = Climb.objects.get(slug=slug)
-	video = Video.objects.filter(climb__slug=slug)
-	videocount = Video.objects.filter(climb__slug=slug).count()
-	log = UserLog.objects.filter(climb__slug=slug)
-	localstars = UserLog.objects.filter(climb__slug=slug).aggregate(Avg('stars'))
-	localgrade = UserLog.objects.filter(climb__slug=slug).aggregate(Avg('personal_grade'))
-	localsends = UserLog.objects.filter(climb__slug=slug).count()
-	return render(request, 'climbs/condensed/climb_detail_condensed.html', {
-		'localstars': localstars,
-		'localsends': localsends,
-		'localgrade': localgrade,
-        'climb': climb,
-		'video': video,
-		'log': log,
-		'videocount': videocount,
-})
 
 
-
+@login_required	
 def new_climb(request):
 	if request.method == "POST":
 		form = NewClimb(request.POST)
@@ -67,7 +52,7 @@ def new_climb(request):
 	return render(request, 'new_climb.html', {'form': form})
 	
 
-
+@login_required	
 def log_climb(request):
 	if request.method == "POST":
 		form = LogClimb(request.POST)
@@ -81,7 +66,7 @@ def log_climb(request):
 		form = LogClimb()
 	return render(request, 'log_climb.html', {'form': form})
 	
-	
+@login_required		
 def add_video(request):
 	if request.method == "POST":
 		form = AddVideo(request.POST)
@@ -95,7 +80,7 @@ def add_video(request):
 		form = AddVideo()
 	return render(request, 'add_video.html', {'form': form})
 	
-
+@login_required	
 def user_profile(request, uid):
 	profile = User.objects.get(id=uid)
 	log = UserLog.objects.filter(user__id=uid).order_by('personal_grade', 'date')
@@ -139,18 +124,19 @@ def user_profile(request, uid):
 		'videosadded': videosadded,
 })
 
-
+@login_required	
 def user_list(request):
 	users = User.objects.all()
 	return render(request, 'users/user_list.html', {
 		'users': users,
 })
 
+@login_required	
 def climb_list(request):
 	userlist = User.objects.order_by('id')
 	currentuser = request.user
 	if request.GET:
-		qs = Climb.objects.all()
+		qs = Climb.objects.all().prefetch_related('users')
 		qs = qs.annotate(videocount=Count('video', distinct=True)).annotate(starsavg=Avg('userlog__stars', distinct=True)).annotate(gradeavg=Avg('userlog__personal_grade', distinct=True)).annotate(localrepeats=Count('userlog'))
 		climbheader = 'Climbs'
 		searchname = request.GET.get('name', '')
@@ -187,8 +173,9 @@ def climb_list(request):
 		if searchsort == 'sortvideos':
 			qs = qs.order_by('-videocount')
 	else:
-		qs = Climb.objects.none()
+		qs = Climb.objects.none().prefetch_related('users')
 		climbheader = ''
+		users = UserLog.objects.none()
 		
 	return render(request, 'climbs/climb_list.html', {
 		'climb': qs,
@@ -197,6 +184,26 @@ def climb_list(request):
 })
 
 
-def edit_profile(request):
-    user_profile = request.user.profile()
-    url = user_profile.url
+@login_required
+def edit_climb(request,slug):
+	climb = Climb.objects.get(slug=slug)
+	climbs_count = Climb.objects.count()
+	form_class = EditClimb
+	if request.method == 'POST':
+		form = form_class(data=request.POST, instance=climb)
+		if form.is_valid():
+			form.save()
+			return redirect('climb_detail', slug=climb.slug)
+	else:
+		form = form_class(instance=climb)
+	return render(request, 'climbs/edit_climb.html', {
+		'climb': climb,
+		'form': form,
+		
+})
+
+
+	
+def logout_view(request):
+	logout(request)
+	return render(request, 'registration/logout.html')

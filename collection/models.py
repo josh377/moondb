@@ -29,6 +29,7 @@ class Climb(models.Model):
 	slug = models.SlugField(unique=True)
 	date = models.DateTimeField(auto_now_add=True)
 	canvas = models.BooleanField(default=False)
+	users = models.ManyToManyField(User, through='collection.UserLog')
 	def __str__(self):
 		return '%s %s' % (self.name, self.get_grade_display())
 		

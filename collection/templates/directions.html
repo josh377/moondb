@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Video Directions{% endblock title %}
+
+{% block maincontent %}
+
+<h1>THIS IS OUT OF DATE!! Screenshots from previous project</h1>
+<div id="directions">
+<h3>Directions for: <a href="#instagram">Instagram</a> &#160&#160&#160 <a href="#vimeo">Vimeo</a>&#160&#160&#160 <a href="#youtube">Youtube</a><br><br></h3>
+<div id="instagram">
+<h3>Adding a Video from Instagram:</h3>
+<img src="{% static "images/instagram1.jpeg" %}" / border="0" width=450><br><br>
+<img src="{% static "images/instagram2.jpeg" %}" / border="0" width=450><br><br>
+<img src="{% static "images/instagram3.jpeg" %}" / border="0" width=450><br><br>
+<img src="{% static "images/instagram4.jpeg" %}" / border="0">
+
+</div>
+<br><br><br>
+
+<div id="vimeo">
+<h3>Adding a Video from Vimeo:</h3>
+<img src="{% static "images/vimeo1.jpeg" %}" / border="0" width=450><br><br>
+<img src="{% static "images/vimeo2.jpeg" %}" / border="0" width=450><br><br>
+<img src="{% static "images/vimeo3.jpeg" %}" / border="0"><br><br>
+
+</div>
+<br><br><br>
+
+<div id="youtube">
+<h3>Adding a Video from Youtube:</h3>
+<img src="{% static "images/youtube1.jpeg" %}" / border="0" width=450><br><br>
+<img src="{% static "images/youtube2.jpeg" %}" / border="0"><br><br>
+
+
+</div>
+<br><br><br>
+
+{% endblock maincontent %}
