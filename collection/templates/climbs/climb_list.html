@@ -141,18 +141,19 @@
 		<td valign="top"><b>Global Grade:</b> {{ climb.get_grade_display }}<br>
 		<br>{% if climb.stars != NULL %}<b>Global Stars:</b>  <img src="/static/images/{{ climb.stars }}star.jpg" height="20">{% endif %}<br>
 		<br><br><br>
-		<b>Local Grade:</b> {% if climb.gradeavg|floatformat:"0" == '13' %}8b{% endif %}
+		<b>Local Grade:</b> 
+		{% if climb.gradeavg|floatformat:"0" == '13' %}8b{% endif %}
 		{% if climb.gradeavg|floatformat:"0" == '12' %}8a+{% endif %}
 		{% if climb.gradeavg|floatformat:"0" == '11' %}8a{% endif %}
 		{% if climb.gradeavg|floatformat:"0" == '10' %}7c+{% endif %}
 		{% if climb.gradeavg|floatformat:"0" == '9' %}7c{% endif %}
-		{% if climb.gradeavg >= 8.5 and climb.gradeavg < 9.0 %}7b+{% endif %}
-		{% if climb.gradeavg >= 8.0 and climb.gradeavg < 8.5 %}7b{% endif %}
-		{% if climb.gradeavg|floatformat:"0" == '7' %}7a+{% endif %}
-		{% if climb.gradeavg|floatformat:"0" == '6' %}7a{% endif %}
-		{% if climb.gradeavg|floatformat:"0" == '5' %}6c+{% endif %}
-		{% if climb.gradeavg|floatformat:"0" == '4' %}6c{% endif %}
-		{% if climb.gradeavg|floatformat:"0" == '3' %}6b+{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '8' %}7b+{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '7' %}7b{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '6' %}7a+{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '5' %}7a{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '4' %}6c+{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '3' %}6c{% endif %}
+		{% if climb.gradeavg|floatformat:"0" == '2' %}6b+{% endif %}
 		
 		<br>
 		

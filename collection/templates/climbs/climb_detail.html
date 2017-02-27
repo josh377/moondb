@@ -37,13 +37,13 @@
 		{% if localgrade.personal_grade__avg|floatformat:"0" == '11' %}8a{% endif %}
 		{% if localgrade.personal_grade__avg|floatformat:"0" == '10' %}7c+{% endif %}
 		{% if localgrade.personal_grade__avg|floatformat:"0" == '9' %}7c{% endif %}
-		{% if localgrade.personal_grade__avg >= 8.5 and localgrade.personal_grade__avg < 9.0 %}7b+{% endif %}
-		{% if localgrade.personal_grade__avg >= 8.0 and localgrade.personal_grade__avg < 8.5 %}7b{% endif %}
-		{% if localgrade.personal_grade__avg|floatformat:"0" == '7' %}7a+{% endif %}
-		{% if localgrade.personal_grade__avg|floatformat:"0" == '6' %}7a{% endif %}
-		{% if localgrade.personal_grade__avg|floatformat:"0" == '5' %}6c+{% endif %}
-		{% if localgrade.personal_grade__avg|floatformat:"0" == '4' %}6c{% endif %}
-		{% if localgrade.personal_grade__avg|floatformat:"0" == '3' %}6b+{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '8' %}7b+{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '7' %}7b{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '6' %}7a+{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '5' %}7a{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '4' %}6c+{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '3' %}6c{% endif %}
+		{% if localgrade.personal_grade__avg|floatformat:"0" == '2' %}6b+{% endif %}
 		</td>
 		<td>
 		{% if log %}
