@@ -12,9 +12,11 @@ from django import forms
 def home(request):
 	recent_sends = UserLog.objects.order_by('-date')
 	recent_videos = Video.objects.order_by('-date')
+	recent_rec = UserLog.objects.filter(recommended='True').order_by('-date')
 	return render(request, 'index.html', {
 		'recent_sends': recent_sends,
 		'recent_videos': recent_videos,
+		'recent_rec': recent_rec,
 		
 })
 
