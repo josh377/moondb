@@ -10,8 +10,58 @@
 
 <form method="POST" action="/climbs/{{ climb.slug }}/edit/" class="" />
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
+	{{ form.non_field_errors }}
+<table class="formtable">
+	<tr>
+		<td>
+		<b>Name:</b>
+		</td>
+		<td>
+		{{ form.name }}
+		</td>
+		<td>
+		{{ form.name.errors }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Official Grade:</b>
+		</td>
+		<td>
+		{{ form.grade }}
+		</td>
+		<td>
+		{{ form.global_grade.errors }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Official Stars:</b>
+		</td>
+		<td>
+		{{ form.stars }}
+		</td>
+		<td>
+		{{ form.stars.errors }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Global Sends:</b>
+		</td>
+		<td>
+		{{ form.global_repeats }}
+		</td>
+		<td>
+		{{ form.global_repeats.errors }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<button type="submit">Save</button>
+		</td>
+	</tr>
+</table>
 </form>
 
 

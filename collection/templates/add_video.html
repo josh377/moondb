@@ -5,6 +5,7 @@
 {% block maincontent %}
 <form method="POST" class="post-form">{% csrf_token %}
 <h2>Add Video</h2>
+{{ form.non_field_errors }}
 <table class="formtable">
 	<tr>
 		<td><b>Climb:</b>
@@ -12,6 +13,8 @@
 		<td>
 		{{ form.climb }}
 		</td>
+		<td>
+		{{ form.climb.errors }}
 	</tr>
 	<tr>
 		<td>
@@ -19,6 +22,9 @@
 		</td>
 		<td>
 		{{ form.url }}
+		</td>
+		<td>
+		
 		</td>
 	</tr>
 	<tr>

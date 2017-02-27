@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Count, Q, Sum
+
 
 class Climb(models.Model):
 	GRADES = (
@@ -23,7 +25,7 @@ class Climb(models.Model):
 		(0, '0'),
 	)
 	name = models.CharField(max_length=255, unique=True)
-	grade = models.IntegerField("Global Grade", choices=GRADES)
+	grade = models.IntegerField(choices=GRADES)
 	stars = models.IntegerField(choices=STARS, null=True)
 	global_repeats = models.CharField(max_length=255, blank=True)
 	slug = models.SlugField(unique=True)
@@ -75,10 +77,10 @@ class UserLog(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	climb = models.ForeignKey(Climb, on_delete=models.CASCADE)
 	attempts = models.CharField(max_length=255, choices=ATTEMPTS, blank=True)
-	personal_grade = models.IntegerField(choices=GRADES)
-	stars = models.IntegerField(choices=STARS)
+	personal_grade = models.IntegerField(choices=GRADES, blank=True)
+	stars = models.IntegerField(choices=STARS, blank=True)
 	comments = models.TextField(blank=True)
-	date = models.DateTimeField()
+	date = models.DateTimeField(blank=True)
 	recommended = models.BooleanField(default=False)
 	def __str__(self):
 		return "%s %s" % (self.user, self.climb)
@@ -93,6 +95,7 @@ class UserDetails(models.Model):
 	weight = models.CharField(max_length=255, blank=True)
 	ape_index = models.CharField("Ape Index", max_length=255, blank=True)
 	moonboardlocation = models.CharField("Moonboard Location", max_length=255, blank=True)
+	
 	
 		
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
-from collection.models import Climb, Video, UserLog
+from collection.models import Climb, Video, UserLog, UserDetails
 from django.db.models import Count, Avg, Sum, Q
+
 from collection.forms import NewClimb, LogClimb, AddVideo, EditClimb, EditUserDetails, EditSend
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -56,8 +57,11 @@ def log_climb(request):
 			obj.save()
 			return redirect('user_profile', uid=userid.id)
 	else:
-		climbid = request.GET.get('climbid', '')
-		form = LogClimb({'climb':climbid})
+		if request.GET:
+			climbid = request.GET.get('climbid', '')
+			form = LogClimb({'climb':climbid})
+		else:
+			form = LogClimb()
 	
 	return render(request, 'log_climb.html', {'form': form})
 
@@ -246,10 +250,17 @@ def edit_send(request, sendid):
 		return render(request, 'sends/edit_send.html', {
 			'form': form,
 			'send': send,
+			
 		})
 	else:
 		return render(request, 'index.html')
-
+		
+@login_required
+def stats(request):
+	return render(request, 'stats/stats.html', {
+		
+		
+})
 		
 
 @login_required	
@@ -268,6 +279,7 @@ def delete_send(request, sendid):
 def delete_confirm(request, sendid):
 	currentuser = request.user
 	send = UserLog.objects.get(id=sendid).delete()
+	
 	return redirect('user_profile', uid=currentuser.id)
 	
 

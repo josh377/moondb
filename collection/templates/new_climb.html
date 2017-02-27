@@ -5,12 +5,16 @@
 
 <h2>New Climb</h2>
 <form method="POST" class="post-form">{% csrf_token %}
+{{ form.non_field_errors }}
 <table class="formtable">
 	<tr>
 		<td><b>Name:</b>
 		</td>
 		<td>
         {{ form.name }}
+		</td>
+		<td>
+		{{ form.name.errors }}
 		</td>
 	</tr>
 	<tr>
@@ -19,6 +23,8 @@
 		<td>
 		{{ form.grade }}
 		</td>
+		<td>
+		{{ form.grade.errors }}
 	</tr>
 	<tr>
 		<td>

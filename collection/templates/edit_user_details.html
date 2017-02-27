@@ -9,6 +9,7 @@
 
 <form method="POST" action="/user_details/edit/" class="" />
     {% csrf_token %}
+	{{ form.non_field_errors }}
 <table class="formtable">
 	<tr>
 		<td>
@@ -16,6 +17,9 @@
 		</td>
 		<td>
 		{{ form.first_name }}
+		</td>
+		<td>
+		{{ form.first_name.errors }}
 		</td>
 	</tr>
 	<tr>
@@ -25,6 +29,9 @@
 		<td>
 		{{ form.last_name }}
 		</td>
+		<td>
+		{{ form.last_name.errors }}
+		</td>
 	</tr>
 	<tr>
 		<td>
@@ -32,6 +39,9 @@
 		</td>
 		<td>
 		{{ form.location }}
+		</td>
+		<td>
+		{{ form.location.errors }}
 		</td>
 	</tr>
 	<tr>
@@ -41,6 +51,9 @@
 		<td>
 		{{ form.moonboardlocation }}
 		</td>
+		<td>
+		{{ form.moonboardlocation.errors }}
+		</td>
 	</tr>
 	<tr>
 		<td>
@@ -48,6 +61,9 @@
 		</td>
 		<td>
 		{{ form.height }}
+		</td>
+		<td>
+		{{ form.height.errors }}
 		</td>
 	</tr>
 	<tr>
@@ -57,6 +73,9 @@
 		<td>
 		{{ form.weight }}
 		</td>
+		<td>
+		{{ form.weight.errors }}
+		</td>
 	</tr>
 	<tr>
 		<td>
@@ -64,6 +83,9 @@
 		</td>
 		<td>
 		{{ form.ape_index }}
+		</td>
+		<td>
+		{{ form.ape_index.errors }}
 		</td>
 	</tr>
 	<tr>

@@ -14,10 +14,9 @@
 <a href="/sends/{{ send.id }}/delete">[Delete this send]</a>
 <br><br>
 
-
-
 <form method="POST" action="/sends/{{ send.id }}/edit/" class="" />
 {% csrf_token %}
+{{ form.non_field_errors }}
 <table class="formtable">
 	<tr>
 		<td>
@@ -25,13 +24,19 @@
 		</td>	
 		<td>{{ form.climb }}
 		</td>
+		<td>
+		{{ form.climb.errors }}
+		</td>
 	</tr>
 	<tr>
 		<td>
 		<b>Date: </b>
 		</td>
 		<td>
-		<input id="datepicker" name="date" type="text" required />
+		<input id="datepicker" name="date" type="text" required value={{ send.date|date:"m/j/y"  }}>
+		</td>
+		<td>
+		{{ form.date.errors }}
 		</td>
 	</tr>
 	<tr>
@@ -41,12 +46,18 @@
 		<td>
 		{{ form.attempts }}
 		</td>
+		<td>
+		{{ form.attempts.errors }}
+		</td>
 	</tr>
 	<tr>
 		<td>
 		<b>Personal Grade:</b>
 		</td>
 		<td>{{ form.personal_grade }}
+		</td>
+		<td>
+		{{ form.personal_grade.errors }}
 		</td>
 	</tr>
 	<tr>
@@ -55,7 +66,10 @@
 		</td>
 		<td>{{ form.stars }}
 		</td>
-	</tr>
+		<td>
+		{{ form.stars.errors }}
+		</td>
+		</tr>
 	<tr>
 		<td>
 		<b>Recommended:</b>
@@ -63,12 +77,18 @@
 		<td>
 		{{ form.recommended }}
 		</td>
+		<td>
+		{{ form.recommended.errors }}
+		</td>
 	</tr>
 	<tr>
 		<td>
 		<b>Comments: </b>
 		</td>
 		<td>{{ form.comments }}
+		</td>
+		<td>
+		{{ form.comments.errors }}
 		</td>
 	</tr>
 	<tr>

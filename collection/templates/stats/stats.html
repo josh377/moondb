@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Stats{% endblock title %}
+
+{% block maincontent %}
+
+<h2>Stats</h2>
+
+Total Sends:<br>
+{% for totalsends in totalsends %}
+{{ totalsends.userdetails.first_name }} {{ totalsends.sends }}<br>
+{% endfor %}
+
+{% for users in users %}
+{{ users.userdetails.sevencpoints }}
+{% endfor %}
+
+	
+{% endblock %}

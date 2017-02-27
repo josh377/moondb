@@ -41,4 +41,5 @@ urlpatterns = [
 	url(r'^login/$', auth_views.login, name='login'),
 	url(r'^registration/logout', views.logout_view, name='logout'),
 	url(r'^directions/$', TemplateView.as_view(template_name='directions.html'), name='directions'),
+	url(r'^stats/$', views.stats, name='stats'),
 ]
