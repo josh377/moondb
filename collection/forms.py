@@ -27,7 +27,7 @@ class LogClimb(forms.ModelForm):
 class EditSend(ModelForm):
 	class Meta:
 		model = UserLog
-		fields = ('climb', 'attempts', 'date', 'personal_grade', 'stars', 'comments')
+		fields = ('climb', 'attempts', 'date', 'personal_grade', 'stars', 'recommended', 'comments')
 		
 
 class AddVideo(forms.ModelForm):

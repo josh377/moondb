@@ -15,7 +15,7 @@
 	<tr>
 		<td>
 		{% csrf_token %}
-		Climb:
+		<b>Climb:</b>
 		</td>
 		<td>
 		{{ form.climb }}
@@ -23,39 +23,44 @@
 	</tr>
 	<tr>
 		<td>
-		Date:
+		<b>Date:</b>
 		</td>
 		<td>
 		<input id="datepicker" name="date" type="text" required />
 		</td>
 	</tr>
 	<tr>
-		<td>Attempts: 
+		<td>
+		<b>Attempts: </b>
 		</td>
 		<td>
 		{{ form.attempts }}
 		</td>
 	</tr>
 	<tr>
-		<td>Personal Grade: 
+		<td>
+		<b>Personal Grade: </b>
 		</td>
 		<td>{{ form.personal_grade }}
 		</td>
 	</tr>
 	<tr>
-		<td>Stars:
+		<td>
+		<b>Stars:</b>
 		</td>
 		<td>{{ form.stars }}
 		</td>
 	</tr>
 	<tr>
-		<td>Recommended:
+		<td>
+		<b>Recommended:</b>
 		</td>
 		<td>{{ form.recommended }}
 		</td>
 	</tr>
 	<tr>
-		<td>Comments:
+		<td>
+		<b>Comments:</b>
 		</td>
 		<td>{{ form.comments }}
 		</td>

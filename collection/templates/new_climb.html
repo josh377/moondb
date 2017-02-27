@@ -5,8 +5,27 @@
 
 <h2>New Climb</h2>
 <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+<table class=formtable>
+	<tr>
+		<td><b>Name:</b>
+		</td>
+		<td>
+        {{ form.name }}
+		</td>
+	</tr>
+	<tr>
+		<td><b>Grade:</b>	
+		</td>
+		<td>
+		{{ form.grade }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+        <button type="submit" class="save btn btn-default">Submit</button>
+		</td>
+	</tr>
+</table>
     </form>
 
 	

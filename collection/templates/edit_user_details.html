@@ -5,12 +5,76 @@
 {% block maincontent %}
 
 <h2>Edit User Details</h2>
-<br>
+
 
 <form method="POST" action="/user_details/edit/" class="" />
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
+<table class="formtable">
+	<tr>
+		<td>
+		<b>First Name:</b>
+		</td>
+		<td>
+		{{ form.first_name }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Last Name:</b>
+		</td>
+		<td>
+		{{ form.last_name }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Location:</b>
+		</td>
+		<td>
+		{{ form.location }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Moonboard Location:</b>
+		</td>
+		<td>
+		{{ form.moonboardlocation }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Height:</b>
+		</td>
+		<td>
+		{{ form.height }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Weight:</b>
+		</td>
+		<td>
+		{{ form.weight }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Ape Index:</b>
+		</td>
+		<td>
+		{{ form.ape_index }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<button type="submit">Save</button>
+		</td>
+	</tr>
+
+</table>
+    
+    
 </form>
 
 

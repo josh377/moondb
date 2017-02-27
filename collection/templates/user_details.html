@@ -6,12 +6,45 @@
 
 <h2>{{ currentuser.userdetails.first_name }} {{ currentuser.userdetails.last_name }}</h2>
 <a href="edit/">[Edit Profile]</a>&#160&#160&#160<a href="/accounts/password_change/">[Change Password]</a><br><br>
-<b>Location: </b>{{ currentuser.userdetails.location }}<br><br>
-<b>Moonboard Location: </b>{{ currentuser.userdetails.moonboardlocation }}<br><br>
-<b>Height: </b>{{ currentuser.userdetails.height }}<br><br>
-<b>Weight: </b>{{ currentuser.userdetails.weight }}<br><br>
-<b>Ape Index: </b>{{ currentuser.userdetails.ape_index }}
-<br><br><br>
+<table class="formtable">
+	<tr>
+		<td>
+		<b>Location: </b>
+		</td>
+		<td>
+		{{ currentuser.userdetails.location }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Moonboard: </b>
+		</td>
+		<td>{{ currentuser.userdetails.moonboardlocation }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Height: </b>
+		</td>
+		<td>{{ currentuser.userdetails.height }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Weight: </b>
+		</td>
+		<td>{{ currentuser.userdetails.weight }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Ape Index: </b>
+		</td>
+		<td>
+		{{ currentuser.userdetails.ape_index }}
+		</td>
+	</tr>
+</table>
 
 
 	

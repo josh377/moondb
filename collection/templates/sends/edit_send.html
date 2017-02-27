@@ -17,16 +17,65 @@
 
 
 <form method="POST" action="/sends/{{ send.id }}/edit/" class="" />
-    {% csrf_token %}
-	Climb: {{ form.climb }}<br><br>
-	Date: <input id="datepicker" name="date" type="text" required /><br><br>
-	Attempts: {{ form.attempts }}<br><br>
-	Personal Grade: {{ form.personal_grade }}<br><br>
-	Stars: {{ form.stars }}<br><br>
-	Comments: {{ form.comments }}<br><br>
-	
-    
-    <button type="submit">Save</button>
+{% csrf_token %}
+<table class="formtable">
+	<tr>
+		<td>
+		<b>Climb:</b>
+		</td>	
+		<td>{{ form.climb }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Date: </b>
+		</td>
+		<td>
+		<input id="datepicker" name="date" type="text" required />
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Attempts:</b>
+		</td>
+		<td>
+		{{ form.attempts }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Personal Grade:</b>
+		</td>
+		<td>{{ form.personal_grade }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Stars:</b>
+		</td>
+		<td>{{ form.stars }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Recommended:</b>
+		</td>
+		<td>
+		{{ form.recommended }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>Comments: </b>
+		</td>
+		<td>{{ form.comments }}
+		</td>
+	</tr>
+	<tr>
+		<td><button type="submit">Save</button>
+		</td>
+	</tr>
+</table>
 </form>
 <br><br>
 
