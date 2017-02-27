@@ -148,7 +148,7 @@
 	{% if log %}{% for log in log %}
 	<tr>
 		<td>
-		<a href="/users/{{ log.user.id }}">{{ log.user }}</a>
+		<a href="/users/{{ log.user.id }}">{{ log.user.userdetails.first_name }}</a>
 		</td>
 		<td>
 		{{ log.date|date:"n/j/y" }}
