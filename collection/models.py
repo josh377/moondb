@@ -78,7 +78,8 @@ class UserLog(models.Model):
 	personal_grade = models.IntegerField(choices=GRADES)
 	stars = models.IntegerField(choices=STARS)
 	comments = models.TextField(blank=True)
-	date = models.DateField()
+	date = models.DateTimeField()
+	recommended = models.BooleanField(default=False)
 	def __str__(self):
 		return "%s %s" % (self.user, self.climb)
 		

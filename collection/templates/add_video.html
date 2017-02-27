@@ -3,13 +3,31 @@
 {% block title %}Add Video{% endblock title %}
 
 {% block maincontent %}
-
-<h2>Add Video</h2>
-
 <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
+<h2>Add Video</h2>
+<table class="formtable">
+	<tr>
+		<td><b>Climb:</b>
+		</td>
+		<td>
+		{{ form.climb }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<b>URL:</b>
+		</td>
+		<td>
+		{{ form.url }}
+		</td>
+	</tr>
+	<tr>
+		<td>
         <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+		</td>
+	</tr>
+</table>
+</form>
 	
 	<br>
 	Click <a href="/directions" target="_blank">here</a> for instructions on how to add a video.<br><br>

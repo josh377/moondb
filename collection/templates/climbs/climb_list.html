@@ -20,11 +20,11 @@
 		<select name="sentby">
 		<option value="" selected>All</option>
 		{% for userlist in userlist %}
-		<option value="{{ userlist.id }}">{{ userlist.first_name }} {{ userlist.last_name }}</option>
+		<option value="{{ userlist.id }}">{{ userlist.userdetails.first_name }} {{ userlist.userdetails.last_name }}</option>
 		{% endfor %}
 		</select> </h5>
 		</td>
-		<td width="300"><h5>Exclude My Sends: <input type="checkbox" name="excludemine" value="true"></h5>
+		<td width="300"><h5>Exclude My Sends: &#160&#160<input type="checkbox" name="excludemine" value="true"></h5>
 		</td>
 	</tr>
 	<tr>
@@ -45,13 +45,15 @@
 		<option value="3">6b+</option>
 		</select></h5>
 		</td>
-		<td>
-		<h5>Local Stars: <select name="localstars">
-		<option value="" selected>All</option>
-		<option value="3">3 stars</option>
-		<option value="2">2 stars (or more)</option>
-		<option value="1">1 star (or more)</option)
-		</select></h5>
+		<td><h5>Recommended By: 
+		<select name="recby">
+		<option value="" selected>---</option>
+		{% for userlist in userlist %}
+		<option value="{{ userlist.id }}">{{ userlist.userdetails.first_name }} {{ userlist.userdetails.last_name }}</option>
+		{% endfor %}
+		</select> </h5>
+		</td>
+		<td width="300"><h5>Only Climbs With Videos:&#160&#160 <input type="checkbox" name="videosonly" value="true" checked></h5>
 		</td>
 	</tr>
 	<tr>
@@ -66,6 +68,12 @@
 		</h5>
 		</td>
 		<td>
+		<h5>Local Stars: <select name="localstars">
+		<option value="" selected>All</option>
+		<option value="3">3 stars</option>
+		<option value="2">2 stars (or more)</option>
+		<option value="1">1 star (or more)</option)
+		</select></h5>
 		</td>
 		<td>
 		<h5>Sort By: <select name="sortby">

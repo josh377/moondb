@@ -8,7 +8,11 @@
 
 
 <font size=6><b>{{ climb.name }}</b></font><br>
-<a href="edit/">[Edit Climb Details]</a><br><br>
+<form action="/log_climb/"  method="get" > <a href="edit/">[Edit Climb Details]</a>&#160
+<input name="climbid" type="hidden" value="{{ climb.id }}">
+<input type="submit" class="linkButton" value="[Log Climb]"/>
+</form>
+<br><br>
 
 
 <table width="850" border="0">
@@ -54,7 +58,8 @@
 <br>
 
 
-
+<form action="/add_video/"  method="get" >
+<input name="climbid" type="hidden" value="{{ climb.id }}">
 <table border="0">
 	<tr>
 		<td rowspan=4 width="427" height="660">
@@ -68,40 +73,50 @@
 		{% endif %}
 		</td>
 		<td width="210" height="220">
-		{% if videocount >= 1 %}
+		{% if video.0 %}
 		<div id="overlay"><a class="popup-link-1" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
 		<div id="thumbnail">{{ video.0.url|safe }}</div></div>
+		{% else %}<center> <input type="submit" class="linkButton" value="[Add Video]"/></center>
 		{% endif %}
 		</td>
 		<td width="210" height="220">
-		{% if videocount >= 2 %}
+		{% if video.1 %}
 		<div id="overlay"><a class="popup-link-2" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
 		<div id="thumbnail">{{ video.1.url|safe }}</div></div>
+		{% elif videocount >= 1 %}<center> <input type="submit" class="linkButton" value="[Add Video]"/></center>
 		{% endif %}
 		</td>
 	</tr>
 	<tr>
 		<td height="220">
-		{% if videocount >= 3 %}
+		{% if video.2 %}
 		<div id="overlay"><a class="popup-link-3" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
 		<div id="thumbnail">{{ video.2.url|safe }}</div></div>
+		{% elif videocount >= 2 %}<center> <input type="submit" class="linkButton" value="[Add Video]"/></center>
 		{% endif %}
 		</td>
 		<td height="220">
-		{% if videocount >= 4 %}
+		{% if video.3 %}
 		<div id="overlay"><a class="popup-link-4" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
 		<div id="thumbnail">{{ video.3.url|safe }}</div></div>
+		{% elif videocount >= 3 %}<center> <input type="submit" class="linkButton" value="[Add Video]"/></center>
 		{% endif %}
 		</td>
 	</tr>
 	<tr>
 		<td height="220">
+		{% if video.4 %}
 		<div id="overlay"><a class="popup-link-5" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
 		<div id="thumbnail">{{ video.4.url|safe }}</div></div>
+		{% elif videocount >= 4 %}<center> <input type="submit" class="linkButton" value="[Add Video]"/></center>
+		{% endif %}
 		</td>
 		<td height="220">
+		{% if video.5 %}
 		<div id="overlay"><a class="popup-link-6" href=""><img id="transparent" width="210" height="220" src="{% static '/images/canvas.jpg' %}"></a>
 		<div id="thumbnail">{{ video.5.url|safe }}</div></div>
+		{% elif videocount >= 5 %}<center> <input type="submit" class="linkButton" value="[Add Video]"/></center>
+		{% endif %}
 		</td>
 	</tr>
 </table>

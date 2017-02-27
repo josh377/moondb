@@ -10,16 +10,63 @@
   </script>
 
 <h2>Log Climb</h2>
+<table class="formtable">
 <form method="POST" class="post-form">
-    {% csrf_token %}
-	Climb: {{ form.climb }}<br><br>
-	Date: <input id="datepicker" name="date" type="text" required /><br><br>
-	Attempts: {{ form.attempts }}<br><br>
-	Personal Grade: {{ form.personal_grade }}<br><br>
-	Stars: {{ form.stars }}<br><br>
-	Comments: {{ form.comments }}<br><br>
+	<tr>
+		<td>
+		{% csrf_token %}
+		Climb:
+		</td>
+		<td>
+		{{ form.climb }}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		Date:
+		</td>
+		<td>
+		<input id="datepicker" name="date" type="text" required />
+		</td>
+	</tr>
+	<tr>
+		<td>Attempts: 
+		</td>
+		<td>
+		{{ form.attempts }}
+		</td>
+	</tr>
+	<tr>
+		<td>Personal Grade: 
+		</td>
+		<td>{{ form.personal_grade }}
+		</td>
+	</tr>
+	<tr>
+		<td>Stars:
+		</td>
+		<td>{{ form.stars }}
+		</td>
+	</tr>
+	<tr>
+		<td>Recommended:
+		</td>
+		<td>{{ form.recommended }}
+		</td>
+	</tr>
+	<tr>
+		<td>Comments:
+		</td>
+		<td>{{ form.comments }}
+		</td>
+	</tr>
+	<tr>
+		<td>
         <button type="submit" class="save btn btn-default">Save</button>
+		</td>
+	</tr>
     </form>
+</table>
 	
 	
 	

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from collection.models import Climb, Video, UserLog
-from django.db.models import Count, Avg, Sum
+from django.db.models import Count, Avg, Sum, Q
 from collection.forms import NewClimb, LogClimb, AddVideo, EditClimb, EditUserDetails, EditSend
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -28,6 +28,10 @@ def climb_detail(request, slug):
 	localstars = UserLog.objects.filter(climb__slug=slug).aggregate(Avg('stars'))
 	localgrade = UserLog.objects.filter(climb__slug=slug).aggregate(Avg('personal_grade'))
 	localsends = UserLog.objects.filter(climb__slug=slug).count()
+	if request.GET:
+		return render(request, 'log_climb.html', {
+			'climbid': climbid,
+		})		
 	return render(request, 'climbs/climb_detail.html', {
 		'localstars': localstars,
 		'localsends': localsends,
@@ -39,7 +43,21 @@ def climb_detail(request, slug):
 		'currentuser': currentuser,
 })
 
-
+@login_required	
+def log_climb(request):
+	if request.method == "POST":
+		form = LogClimb(request.POST)
+		if form.is_valid():
+			obj = form.save(commit=False)
+			userid = request.user
+			obj.user = request.user
+			obj.save()
+			return redirect('user_profile', uid=userid.id)
+	else:
+		climbid = request.GET.get('climbid', '')
+		form = LogClimb({'climb':climbid})
+	
+	return render(request, 'log_climb.html', {'form': form})
 
 @login_required	
 def new_climb(request):
@@ -55,19 +73,7 @@ def new_climb(request):
 	return render(request, 'new_climb.html', {'form': form})
 	
 
-@login_required	
-def log_climb(request):
-	if request.method == "POST":
-		form = LogClimb(request.POST)
-		if form.is_valid():
-			obj = form.save(commit=False)
-			userid = request.user
-			obj.user = request.user
-			obj.save()
-			return redirect('user_profile', uid=userid.id)
-	else:
-		form = LogClimb()
-	return render(request, 'log_climb.html', {'form': form})
+
 	
 @login_required		
 def add_video(request):
@@ -80,7 +86,8 @@ def add_video(request):
 			video = form.save()
 			return redirect('climb_detail', slug=video.climb.slug)
 	else: 
-		form = AddVideo()
+		climbid = request.GET.get('climbid', '')
+		form = AddVideo({'climb':climbid})
 	return render(request, 'add_video.html', {'form': form})
 	
 @login_required	
@@ -147,7 +154,9 @@ def climb_list(request):
 		searchname = request.GET.get('name', '')
 		searchgrade = request.GET.get('grade', '')
 		searchsentby = request.GET.get('sentby', '')
+		searchrecommended = request.GET.get('recby', '')
 		searchexcludemine = request.GET.get('excludemine', '')
+		searchvideosonly = request.GET.get('videosonly', '')
 		searchglobalstars = request.GET.get('globalstars', '')
 		searchlocalstars = request.GET.get('localstars', '')
 		searchsort = request.GET.get('sortby', '')
@@ -157,8 +166,12 @@ def climb_list(request):
 			qs = qs.filter(grade=searchgrade)
 		if searchsentby:
 			qs = qs.filter(userlog__user_id=searchsentby)
+		if searchrecommended:
+			qs = qs.filter(Q(userlog__user_id=searchrecommended) & Q(userlog__recommended='True'))
 		if searchexcludemine == 'true':
 			qs = qs.exclude(userlog__user_id=currentuser)
+		if searchvideosonly == 'true':
+			qs = qs.exclude(videocount=0)
 		if searchglobalstars:
 			qs = qs.filter(stars=searchglobalstars)
 		if searchlocalstars == '3':

@@ -19,7 +19,7 @@ class NewClimb(forms.ModelForm):
 class LogClimb(forms.ModelForm):
 	class Meta:
 		model = UserLog
-		fields = ('climb', 'date', 'attempts', 'personal_grade', 'stars', 'comments')
+		fields = ('climb', 'date', 'attempts', 'personal_grade', 'stars', 'recommended', 'comments')
 	def __init__(self, *args, **kwargs):
 		super(LogClimb, self).__init__(*args, **kwargs)   
 		self.fields['climb'].queryset = Climb.objects.order_by('name')
