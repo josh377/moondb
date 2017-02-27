@@ -11,10 +11,10 @@
 
 <h2>Log Climb</h2>
 <table class="formtable">
-<form method="POST" class="post-form">
+<form method="POST" class="post-form">{% csrf_token %}
 	<tr>
 		<td>
-		{% csrf_token %}
+		
 		<b>Climb:</b>
 		</td>
 		<td>
@@ -73,7 +73,10 @@
     </form>
 </table>
 	
-	
+	<form method="POST" class="post-form">{% csrf_token %}
+	{{ form.as_p }}
+	<button type="submit" class="save btn btn-default">Save</button>
+	</form>
 	
 
 	
