@@ -14,7 +14,7 @@
 	
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="{% static '/images/icon.png' %}">
 
     <title>{% block title %}{% endblock title %} -- moonDB</title>
 
@@ -54,6 +54,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
+			<li><img src="{% static 'images/logo.png' %}" height="45"></li>
             <li><a href="/">Home</a></li>
             <li><a href="/climb_list/">Climbs</a></li>
             <li><a href="/user_list/">Users</a></li>

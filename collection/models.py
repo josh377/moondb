@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Count, Q, Sum
+from django.db.models.signals import post_save
+from django.dispatch.dispatcher import receiver
+
 
 
 class Climb(models.Model):
@@ -84,8 +87,13 @@ class UserLog(models.Model):
 	recommended = models.BooleanField(default=False)
 	def __str__(self):
 		return "%s %s" % (self.user, self.climb)
+	
+
 		
+
 		
+	
+	
 class UserDetails(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	first_name = models.CharField(max_length=255)
@@ -95,6 +103,32 @@ class UserDetails(models.Model):
 	weight = models.CharField(max_length=255, blank=True)
 	ape_index = models.CharField("Ape Index", max_length=255, blank=True)
 	moonboardlocation = models.CharField("Moonboard Location", max_length=255, blank=True)
+	eightbsends = models.IntegerField(editable=False)
+	eightaplussends = models.IntegerField(editable=False)
+	eightasends = models.IntegerField(editable=False)
+	sevencplussends = models.IntegerField(editable=False)
+	sevencsends = models.IntegerField(editable=False)
+	sevenbplussends = models.IntegerField(editable=False)
+	sevenbsends = models.IntegerField(editable=False)
+	sevenaplussends = models.IntegerField(editable=False)
+	sevenasends = models.IntegerField(editable=False)
+	sixcplussends = models.IntegerField(editable=False)
+	sixcsends = models.IntegerField(editable=False)
+	sixbplussends = models.IntegerField(editable=False)
+	def save(self):
+		self.eightbsends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=13)).count()
+		self.eightaplussends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=12)).count()
+		self.eightasends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=11)).count()
+		self.sevencplussends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=10)).count()
+		self.sevencsends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=9)).count()
+		self.sevenbplussends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=8)).count()
+		self.sevenbsends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=7)).count()
+		self.sevenaplussends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=6)).count()
+		self.sevenasends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=5)).count()
+		self.sixcplussends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=4)).count()
+		self.sixcsends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=3)).count()
+		self.sixbplussends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=2)).count()
+		super(UserDetails, self).save()
 	
 	
 		

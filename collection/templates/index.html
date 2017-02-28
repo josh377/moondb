@@ -8,7 +8,7 @@
 <font size=4><b>Recent Sends:</b></font>
 <ul>
 {% for recent_sends in recent_sends|slice:":10" %}
-<li><a href="/users/{{ recent_sends.user.id }}">{{ recent_sends.user.first_name }}</a> sent <a href="/climbs/{{ recent_sends.climb.slug }}/">{{ recent_sends.climb.name }} ({{ recent_sends.climb.get_grade_display }})</a> on {{ recent_sends.date|date:"m/j/y" }}</li>
+<li><a href="/users/{{ recent_sends.user.id }}">{{ recent_sends.user.first_name }}</a> sent <a href="/climbs/{{ recent_sends.climb.slug }}/">{{ recent_sends.climb.name }} ({{ recent_sends.climb.get_grade_display }})</a> on {{ recent_sends.date|date:"m/d/y" }}</li>
 {% endfor %}
 </ul>
 
@@ -16,7 +16,7 @@
 <font size=4><b>Recent Videos:</b></font>
 <ul>
 {% for recent_videos in recent_videos|slice:":10" %}
-<li><a href="/users/{{ recent_videos.user.id }}">{{ recent_videos.uploaded_by.first_name }}</a> added a video to <a href="/climbs/{{ recent_videos.climb.slug }}/">{{ recent_videos.climb.name }} ({{ recent_videos.climb.get_grade_display }})</a> on {{ recent_videos.date|date:"m/j/y" }}</li>
+<li><a href="/users/{{ recent_videos.user.id }}">{{ recent_videos.uploaded_by.first_name }}</a> added a video to <a href="/climbs/{{ recent_videos.climb.slug }}/">{{ recent_videos.climb.name }} ({{ recent_videos.climb.get_grade_display }})</a> on {{ recent_videos.date|date:"m/d/y" }}</li>
 {% endfor %}
 </ul>
 
@@ -24,7 +24,7 @@
 <font size=4><b>Recent Recommended Climbs:</b></font>
 <ul>
 {% for recent_rec in recent_rec|slice:":10" %}
-<li><a href="/users/{{ recent_rec.user.id }}">{{ recent_rec.user.userdetails.first_name }}</a> recommended the climb <a href="/climbs/{{ recent_rec.climb.slug }}/">{{ recent_rec.climb.name }} ({{ recent_rec.climb.get_grade_display }})</a> on {{ recent_rec.date|date:"m/j/y" }}</li>
+<li><a href="/users/{{ recent_rec.user.id }}">{{ recent_rec.user.userdetails.first_name }}</a> recommended the climb <a href="/climbs/{{ recent_rec.climb.slug }}/">{{ recent_rec.climb.name }} ({{ recent_rec.climb.get_grade_display }})</a> on {{ recent_rec.date|date:"m/d/y" }}</li>
 {% endfor %}
 </ul>
 

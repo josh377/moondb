@@ -100,7 +100,7 @@ def add_video(request):
 def user_profile(request, uid):
 	profile = User.objects.get(id=uid)
 	currentuser = request.user
-	log = UserLog.objects.filter(user__id=uid).order_by('-personal_grade', 'date')
+	log = UserLog.objects.filter(user__id=uid).order_by('-personal_grade', '-date')
 	totalsends = UserLog.objects.filter(user__id=uid).count()
 	totalvpoints = UserLog.objects.filter(user__id=uid).aggregate(Sum('personal_grade'))
 	this_month = datetime.now().month
@@ -119,6 +119,15 @@ def user_profile(request, uid):
 	sends6c = UserLog.objects.filter(user__id=uid, personal_grade=4).count()
 	sends6bplus = UserLog.objects.filter(user__id=uid, personal_grade=3).count()
 	videosadded = Video.objects.filter(uploaded_by__id=uid).count()
+	if request.GET:
+		searchsort = request.GET.get('sortby', '')
+		if searchsort == 'sortgrade':
+			log = log.order_by('-personal_grade')
+		if searchsort == 'sortname':
+			log = log.order_by('climb')
+		if searchsort == 'sortdate':
+			log = log.order_by('-date')
+			
 	return render(request, 'users/user_profile.html', {
 		'profile': profile,
 		'log': log,
@@ -144,9 +153,27 @@ def user_profile(request, uid):
 
 @login_required	
 def user_list(request):
-	users = User.objects.all()
+	if request.GET:
+		qs = User.objects.all().order_by('userdetails__first_name')
+		qs = qs.annotate(sendcount=Count('userlog', distinct=True)).annotate(videocount=Count('video', distinct=True))
+		searchname = request.GET.get('name', '')
+		searchsort = request.GET.get('sortby', '')
+		if searchname:
+			qs = qs.filter(userdetails__first_name__icontains=searchname)
+		if searchsort == 'sortname':
+			qs = qs.order_by('first_name')
+		if searchsort == 'sortsends':
+			qs = qs.order_by('sendcount')
+		if searchsort == 'sortvideos':
+			qs = qs.order_by('-videocount')
+	else:
+		qs = User.objects.all().order_by('userdetails__first_name')
+		qs = qs.annotate(sendcount=Count('userlog', distinct=True)).annotate(videocount=Count('video', distinct=True))
+		
+		
+		
 	return render(request, 'users/user_list.html', {
-		'users': users,
+		'qs': qs,
 })
 
 @login_required	

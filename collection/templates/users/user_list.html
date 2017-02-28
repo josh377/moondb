@@ -6,15 +6,88 @@
 
 <h2>User List</h2>
 
+<div class="panel panel-default">
+<div class="panel-heading">
+<form action="/user_list/"  method="get" > 
+<table border=0 width=100%>
+	<tr>
+		<td width="300">
+		<h5>Name: <input type="text" name = "name"></h5>
+		</td>
+		<td width="300">
+		</td>
+		<td width="300">
+		<h5>Sort By: <select name="sortby">
+		<option value="sortname" selected>Name</option>
+		<option value="sortsends">Most Sends</option>
+		<option value="sortvideos">Most Videos</option>
+		</select>
+		
+		</h5>
+		</td>
+	</tr>
+	
+		
+	<tr>
+		<td>
+		<input type="submit" value="Search"/>
+		</td>
+		<td>
+		</td>
+		<td>
+		
+		</td>
+	</tr>
+</table>
+</form>
+</div>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading">
+<table width="100%">
+	<tr bgcolor="eeeeee">
+		<td>
+		Name
+		</td>
+		<td width="250">
+		Location
+		</td>
+		<td width="110">
+		Sends
+		</td>
+		<td width="110">
+		Videos Added
+		</td>
+	</tr>
+	
+	
+	{% for qs in qs %}
+	
+	<tr height="5">
+	</tr>
+	<tr>
+		<td>
+		<a href="/users/{{ qs.id }}/">{{ qs.userdetails.first_name }} {{ qs.userdetails.last_name }}</a>
+		</td>
+		<td>
+		{{ qs.userdetails.location }}
+		</td>
+		<td>
+		{{ qs.sendcount }}
+		</td>
+		<td>
+		{{ qs.videocount }}
+		</td>
+	</tr>
+	<tr height="5">
+		
+	</tr>
+	
+	{% endfor %}
+</table>
 
 
-{% for users in users %}
-<a href="/users/{{ users.id }}">
-{% if users.userdetails.first_name %}
-{{ users.userdetails.first_name }} {{ users.userdetails.last_name }}
-{% else %}
-{{ users }}
-{% endif %}</a><br>
-{% endfor %}
+
 
 {% endblock %}

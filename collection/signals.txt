@@ -1,0 +1,17 @@
+6b+ = 1 point each
+6c = 2
+6c+ = 4
+7a = 8
+7a+ = 16
+7b = 32
+7b+ = 64
+7c = 128
+7c+ = 256
+8a = 512
+8a+ = 1028
+8b = 2056
+
+
+@receiver(post_save, sender=UserLog)
+def update_sends(sender, **kwargs):
+	if kwargs.get('created', False):

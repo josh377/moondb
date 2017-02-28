@@ -11,9 +11,21 @@ Total Sends:<br>
 {{ totalsends.userdetails.first_name }} {{ totalsends.sends }}<br>
 {% endfor %}
 
-{% for users in users %}
-{{ users.userdetails.sevencpoints }}
-{% endfor %}
+{{ user.userdetails.first_name }}<br>
+8b: {{ user.userdetails.eightbsends }}<br>
+8a+: {{ user.userdetails.eightaplussends }}<br>
+8a: {{ user.userdetails.eightasends }}<br>
+7c+: {{ user.userdetails.sevencplussends }}<br>
+7c: {{ user.userdetails.sevencsends }}<br>
+7b+: {{ user.userdetails.sevenbplussends }}<br>
+7b: {{ user.userdetails.sevenbsends }}<br>
+7a+: {{ user.userdetails.sevenaplussends }}<br>
+7a: {{ user.userdetails.sevenasends }}<br>
+6c+: {{ user.userdetails.sixcplussends }}<br>
+6c: {{ user.userdetails.sixcsends }}<br>
+6b+: {{ user.userdetails.sixbplussends }}<br>
+
+
 
 	
 {% endblock %}
