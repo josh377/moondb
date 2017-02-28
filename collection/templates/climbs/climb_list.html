@@ -112,7 +112,8 @@
         <table width=100% border=0>
 				<tr>
 					<td width=80%>
-					<a data-toggle="collapse" href="#collapse{{ climb.id }}"><font color="#000000">{{ climb.name }} ({{ climb.get_grade_display }})</font></a>
+					<a data-toggle="collapse" href="#collapse{{ climb.id }}"><font color="#000000">{{ climb.name }} ({{ climb.get_grade_display }}{% if climb.gradeavg|floatformat:"0" == '13' %}/8b{% endif %}{% if climb.gradeavg|floatformat:"0" == '12' %}/8a+{% endif %}{% if climb.gradeavg|floatformat:"0" == '11' %}/8a{% endif %}{% if climb.gradeavg|floatformat:"0" == '10' %}/7c+{% endif %}{% if climb.gradeavg|floatformat:"0" == '9' %}/7c{% endif %}{% if climb.gradeavg|floatformat:"0" == '8' %}/7b+{% endif %}{% if climb.gradeavg|floatformat:"0" == '7' %}/7b{% endif %}{% if climb.gradeavg|floatformat:"0" == '6' %}/7a+{% endif %}{% if climb.gradeavg|floatformat:"0" == '5' %}/7a{% endif %}{% if climb.gradeavg|floatformat:"0" == '4' %}/6c+{% endif %}{% if climb.gradeavg|floatformat:"0" == '3' %}/6c{% endif %}{% if climb.gradeavg|floatformat:"0" == '2' %}/6b+{% endif %})
+		</font></a>
 					</td>
 					<td><a href="/climbs/{{ climb.slug }}"><font color="#000000">Videos: {{ climb.videocount }}</font></a>
 					</td>
