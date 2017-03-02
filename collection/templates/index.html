@@ -3,30 +3,103 @@
 {% block title %}Home{% endblock title %}
 
 {% block maincontent %}
+<br>
+<table border="0" width="100%">
+	<tr style="vertical-align: top">
+		<td width="50%">
+		
+		<table width="90%">
+			
+			<tr>
+			<td>
+			<div class="panel panel-default">
+			<div class="panel-heading">
+			<font size=4><b>&#160Recent Sends:</b></font>
+			</div>
+			</div>
+			</td>
+			</tr>
+			
+			
+			
+			<tr>
+			<td>
+			<ul>
+			{% for recent_sends in recent_sends|slice:":5" %}
+			<li><a href="/users/{{ recent_sends.user.id }}">{{ recent_sends.user.first_name }}</a> sent <a href="/climbs/{{ recent_sends.climb.slug }}/">{{ recent_sends.climb.name }} ({{ recent_sends.climb.get_grade_display }})</a> on {{ recent_sends.date|date:"m/d/y" }}</li>
+			</li>
+			{% endfor %}
+			</td>
+			</tr>
+			
+		</table>
+		
+		</td>
+		
+		
+		
+		<td  style="vertical-align: top">
 
 
-<font size=4><b>Recent Sends:</b></font>
-<ul>
-{% for recent_sends in recent_sends|slice:":10" %}
-<li><a href="/users/{{ recent_sends.user.id }}">{{ recent_sends.user.first_name }}</a> sent <a href="/climbs/{{ recent_sends.climb.slug }}/">{{ recent_sends.climb.name }} ({{ recent_sends.climb.get_grade_display }})</a> on {{ recent_sends.date|date:"m/d/y" }}</li>
-{% endfor %}
-</ul>
+		<table width="90%">
+			<tr>
+			<td>
+			<div class="panel panel-default">
+			<div class="panel-heading">
+			<font size=4><b>&#160Recent Videos:</b></font>
+			</div>
+			</div>
+			</td>
+			</tr>
+			
+		
+			<tr>
+			<td>
+			<ul>{% for recent_videos in recent_videos|slice:":5" %}
+			<li><a href="/users/{{ recent_videos.user.id }}">{{ recent_videos.uploaded_by.first_name }}</a> added a video to <a href="/climbs/{{ recent_videos.climb.slug }}/">{{ recent_videos.climb.name }} ({{ recent_videos.climb.get_grade_display }})</a> on {{ recent_videos.date|date:"m/d/y" }}</li>
+			</li>
+			{% endfor %}
+			<br><br>
+			</td>
+			</tr>
+			
+		</table>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td  style="vertical-align: top">
+		<table width="90%">
+			<tr>
+			<td>
+			<div class="panel panel-default">
+			<div class="panel-heading">
+			<font size=4><b>&#160Recent Recommended Climbs: </font>
+			</div>
+			</div>
+			</td>
+			</tr>
+			
+		
+			<tr>
+			<td>
+			<ul>{% for recent_rec in recent_rec|slice:":5" %}
+			<li><a href="/users/{{ recent_rec.user.id }}">{{ recent_rec.user.userdetails.first_name }}</a> recommended <a href="/climbs/{{ recent_rec.climb.slug }}/">{{ recent_rec.climb.name }} ({{ recent_rec.climb.get_grade_display }})</a> on {{ recent_rec.date|date:"m/d/y" }}</li>
+			</li>
+			{% endfor %}
 
-<br><br>
-<font size=4><b>Recent Videos:</b></font>
-<ul>
-{% for recent_videos in recent_videos|slice:":10" %}
-<li><a href="/users/{{ recent_videos.user.id }}">{{ recent_videos.uploaded_by.first_name }}</a> added a video to <a href="/climbs/{{ recent_videos.climb.slug }}/">{{ recent_videos.climb.name }} ({{ recent_videos.climb.get_grade_display }})</a> on {{ recent_videos.date|date:"m/d/y" }}</li>
-{% endfor %}
-</ul>
-
-<br><br>
-<font size=4><b>Recent Recommended Climbs:</b></font>
-<ul>
-{% for recent_rec in recent_rec|slice:":10" %}
-<li><a href="/users/{{ recent_rec.user.id }}">{{ recent_rec.user.userdetails.first_name }}</a> recommended the climb <a href="/climbs/{{ recent_rec.climb.slug }}/">{{ recent_rec.climb.name }} ({{ recent_rec.climb.get_grade_display }})</a> on {{ recent_rec.date|date:"m/d/y" }}</li>
-{% endfor %}
-</ul>
+			</td>
+			
+			
+			<td>
+			</td>
+			
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
 
 
 <br><br><br><br>
@@ -42,7 +115,7 @@
 <li><strike>Make change pw prettier</strike></li>
 <li><strike>Add Profile page</strike></li>
 <li>Update add video directions</li>
-<li>Make user list prettier/sortable</li>
+<li><strike>Make user list prettier/sortable</strike></li>
 <li>Add DB auto backup</li>
 <li><strike>Add +video, +send to climb page</strike></li>	
 <li>Add "Benchmark" sort </li>

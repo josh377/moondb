@@ -5,25 +5,108 @@
 {% block maincontent %}
 
 <h2>Stats</h2>
+<br>
+<table width="100%">
+	<tr>
+		<td>
+		<h4>This Month Points</h4>
+		<table id="sendtable" width="400">
+			<tr bgcolor="#eeeeee">
+				<td width="250">
+				Name
+				</td>
+				<td>
+				Points
+				</td>
+			</tr>
+			{% for monthpoints in monthpoints %}
+			<tr>
+				<td>
+				<a href="/users/{{ monthpoints.user.id }}">{{ monthpoints.first_name }} {{ monthpoints.last_name }}</a>
+				</td>
+				<td>
+				{{ monthpoints.monthpoints }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		</td>
+		<td>
+		<h4>This Month Sends</h4>
+		<table id="sendtable" width="400">
+			<tr bgcolor="#eeeeee">
+				<td width="250">
+				Name
+				</td>
+				<td>
+				Sends
+				</td>
+			</tr>
+			{% for monthsends in monthsends %}
+			<tr>
+				<td>
+				<a href="/users/{{ monthsends.id }}">{{ monthsends.userdetails.first_name }} {{ monthsends.userdetails.last_name }}</a>
+				</td>
+				<td>
+				{{ monthsends.sends }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		</td>
+	</tr>
+	<tr height=30>
+	</tr>
+	<tr>
+		<td>
+		<h4>Most Total Points</h4>
+		<table id="sendtable" width="400">
+			<tr bgcolor="#eeeeee">
+				<td width="250">
+				Name
+				</td>
+				<td>
+				Points
+				</td>
+			</tr>
+			{% for totalpoints in totalpoints %}
+			<tr>
+				<td>
+				<a href="/users/{{ totalpoints.user.id }}">{{ totalpoints.first_name }} {{ totalpoints.last_name }}</a>
+				</td>
+				<td>
+				{{ totalpoints.totalpoints }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		</td>
+		<td>
 
-Total Sends:<br>
-{% for totalsends in totalsends %}
-{{ totalsends.userdetails.first_name }} {{ totalsends.sends }}<br>
-{% endfor %}
-
-{{ user.userdetails.first_name }}<br>
-8b: {{ user.userdetails.eightbsends }}<br>
-8a+: {{ user.userdetails.eightaplussends }}<br>
-8a: {{ user.userdetails.eightasends }}<br>
-7c+: {{ user.userdetails.sevencplussends }}<br>
-7c: {{ user.userdetails.sevencsends }}<br>
-7b+: {{ user.userdetails.sevenbplussends }}<br>
-7b: {{ user.userdetails.sevenbsends }}<br>
-7a+: {{ user.userdetails.sevenaplussends }}<br>
-7a: {{ user.userdetails.sevenasends }}<br>
-6c+: {{ user.userdetails.sixcplussends }}<br>
-6c: {{ user.userdetails.sixcsends }}<br>
-6b+: {{ user.userdetails.sixbplussends }}<br>
+		<h4>Most Total Sends</h4>
+		<table id="sendtable" width="400">
+			<tr bgcolor="#eeeeee">
+				<td width="250">
+				Name
+				</td>
+				<td>
+				Sends
+				</td>
+			</tr>
+			{% for totalsends in totalsends %}
+			<tr>
+				<td>
+				<a href="/users/{{ totalsends.id }}">{{ totalsends.userdetails.first_name }} {{ totalsends.userdetails.last_name }}</a>
+				</td>
+				<td>
+				{{ totalsends.sends }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		</td>
+	</tr>
+</table>
 
 
 

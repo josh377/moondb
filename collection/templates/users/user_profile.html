@@ -3,6 +3,8 @@
 {% block title %}{{ profile.userdetails.first_name}} {{ profile.userdetails.last_name }}{% endblock title %}
 {% block maincontent %}
 
+  
+
 
 <h2>{{ profile.userdetails.first_name }} {{ profile.userdetails.last_name }}</h2>
 <b>Location:</b> {{ profile.userdetails.location }}<br>
@@ -19,7 +21,7 @@
 		<b>Month Sends:</b> {{ thismonthcount }}
 		</td>
 		<td width="210">
-		<b>Month Leaderboard</b>
+		
 		</td>
 		<td width="210">
 		<b>Videos Added:</b> {{ videosadded }}
@@ -33,7 +35,7 @@
 		<b>Rank:</b>
 		</td>
 		<td>
-		<b>Victories:</b>
+		
 		</td>
 		<td>
 		<b>Rank:</b>
@@ -254,4 +256,7 @@
 
 
 <!---EndCharts---->
+
+
+
 {% endblock %}

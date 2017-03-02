@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, reverse
 from collection.models import Climb, Video, UserLog, UserDetails
-from django.db.models import Count, Avg, Sum, Q
-
+from django.db.models import Count, Avg, Sum, Q, F, IntegerField, Case, Value, When
 from collection.forms import NewClimb, LogClimb, AddVideo, EditClimb, EditUserDetails, EditSend
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from django import forms
+from chartit import PivotDataPool, PivotChart
 
 @login_required	
 def home(request):
@@ -113,11 +113,11 @@ def user_profile(request, uid):
 	sends7c = UserLog.objects.filter(user__id=uid, personal_grade=9).count()
 	sends7bplus = UserLog.objects.filter(user__id=uid, personal_grade=8).count()
 	sends7b = UserLog.objects.filter(user__id=uid, personal_grade=7).count()
-	sends7aplus = UserLog.objects.filter(user__id=uid, personal_grade=7).count()
-	sends7a = UserLog.objects.filter(user__id=uid, personal_grade=6).count()
-	sends6cplus = UserLog.objects.filter(user__id=uid, personal_grade=5).count()
-	sends6c = UserLog.objects.filter(user__id=uid, personal_grade=4).count()
-	sends6bplus = UserLog.objects.filter(user__id=uid, personal_grade=3).count()
+	sends7aplus = UserLog.objects.filter(user__id=uid, personal_grade=6).count()
+	sends7a = UserLog.objects.filter(user__id=uid, personal_grade=5).count()
+	sends6cplus = UserLog.objects.filter(user__id=uid, personal_grade=4).count()
+	sends6c = UserLog.objects.filter(user__id=uid, personal_grade=3).count()
+	sends6bplus = UserLog.objects.filter(user__id=uid, personal_grade=2).count()
 	videosadded = Video.objects.filter(uploaded_by__id=uid).count()
 	if request.GET:
 		searchsort = request.GET.get('sortby', '')
@@ -292,8 +292,20 @@ def edit_send(request, sendid):
 		
 @login_required
 def stats(request):
+	this_month = datetime.now().month
+	monthpoints = UserDetails.objects.all().annotate(sixbpluspoints = F('sixbplussendsmonth') * 1).annotate(sixcpoints = F('sixcsendsmonth') * 2).annotate(sixcpluspoints = F('sixcplussendsmonth') * 4).annotate(sevenapoints = F('sevenasendsmonth') * 8).annotate(sevenapluspoints = F('sevenaplussendsmonth') * 16).annotate(sevenbpoints = F('sevenbsendsmonth') * 32).annotate(sevenbpluspoints = F('sevenbplussendsmonth') * 64).annotate(sevencpoints = F('sevencsendsmonth') * 128).annotate(sevencpluspoints = F('sevencplussendsmonth') * 256).annotate(eightapoints = F('eightasendsmonth') * 512).annotate(eightapluspoints = F('eightaplussendsmonth') * 1028).annotate(eightbpoints = F('eightbsendsmonth') * 2056)
+	monthpoints = monthpoints.annotate(monthpoints=F('sixbpluspoints') + F('sixcpoints') + F('sixcpluspoints') + F('sevenapoints') + F('sevenapluspoints') + F('sevenbpoints') + F('sevenbpluspoints') + F('sevencpoints') + F('sevencpluspoints') + F('eightapoints') + F('eightapluspoints') + F('eightbpoints')).order_by('-monthpoints')[:3]
+	monthsends = User.objects.all()
+	monthsends = monthsends.annotate(sends=Sum(Case(When(userlog__date__month=this_month, then=1), default=0, output_field=IntegerField()))).order_by('-sends')[:3]
+	totalpoints = UserDetails.objects.all().annotate(sixbpluspoints = F('sixbplussends') * 1).annotate(sixcpoints = F('sixcsends') * 2).annotate(sixcpluspoints = F('sixcplussends') * 4).annotate(sevenapoints = F('sevenasends') * 8).annotate(sevenapluspoints = F('sevenaplussends') * 16).annotate(sevenbpoints = F('sevenbsends') * 32).annotate(sevenbpluspoints = F('sevenbplussends') * 64).annotate(sevencpoints = F('sevencsends') * 128).annotate(sevencpluspoints = F('sevencplussends') * 256).annotate(eightapoints = F('eightasends') * 512).annotate(eightapluspoints = F('eightaplussends') * 1028).annotate(eightbpoints = F('eightbsends') * 2056)
+	totalpoints = totalpoints.annotate(totalpoints=F('sixbpluspoints') + F('sixcpoints') + F('sixcpluspoints') + F('sevenapoints') + F('sevenapluspoints') + F('sevenbpoints') + F('sevenbpluspoints') + F('sevencpoints') + F('sevencpluspoints') + F('eightapoints') + F('eightapluspoints') + F('eightbpoints')).order_by('-totalpoints')[:3]
+	totalsends = User.objects.all()
+	totalsends = totalsends.annotate(sends = Count('userlog')).order_by('-sends')[:3]
 	return render(request, 'stats/stats.html', {
-		
+		'monthpoints': monthpoints,
+		'monthsends': monthsends,
+		'totalpoints': totalpoints,
+		'totalsends': totalsends,
 		
 })
 		
@@ -347,4 +359,40 @@ def edit_details(request):
 def logout_view(request):
 	logout(request)
 	return render(request, 'registration/logout.html')
+
+	
+def weather_chart_view(request):
+    #Step 1: Create a DataPool with the data we want to retrieve.
+    weatherdata = \
+        DataPool(
+           series=
+            [{'options': {
+               'source': MonthlyWeatherByCity.objects.all()},
+              'terms': [
+                'month',
+                'houston_temp',
+                'boston_temp']}
+             ])
+
+    #Step 2: Create the Chart object
+    cht = Chart(
+            datasource = weatherdata,
+            series_options =
+              [{'options':{
+                  'type': 'line',
+                  'stacking': False},
+                'terms':{
+                  'month': [
+                    'boston_temp',
+                    'houston_temp']
+                  }}],
+            chart_options =
+              {'title': {
+                   'text': 'Weather Data of Boston and Houston'},
+               'xAxis': {
+                    'title': {
+                       'text': 'Month number'}}})
+
+    #Step 3: Send the chart object to the template.
+    return render_to_response({'weatherchart': cht})
 

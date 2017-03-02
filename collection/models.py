@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Q, Sum
 from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
+from datetime import datetime, timedelta
 
 
 
@@ -90,9 +91,13 @@ class UserLog(models.Model):
 	
 
 		
+@receiver(post_save, sender=UserLog)
+def update_sends(sender, **kwargs):
+	if kwargs.get('created', False):
+		for userdetailsupdate in UserDetails.objects.filter():
+			userdetailsupdate.save()
+			
 
-		
-	
 	
 class UserDetails(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -103,6 +108,18 @@ class UserDetails(models.Model):
 	weight = models.CharField(max_length=255, blank=True)
 	ape_index = models.CharField("Ape Index", max_length=255, blank=True)
 	moonboardlocation = models.CharField("Moonboard Location", max_length=255, blank=True)
+	eightbsendsmonth = models.IntegerField(editable=False)
+	eightaplussendsmonth = models.IntegerField(editable=False)
+	eightasendsmonth = models.IntegerField(editable=False)
+	sevencplussendsmonth = models.IntegerField(editable=False)
+	sevencsendsmonth = models.IntegerField(editable=False)
+	sevenbplussendsmonth = models.IntegerField(editable=False)
+	sevenbsendsmonth = models.IntegerField(editable=False)
+	sevenaplussendsmonth = models.IntegerField(editable=False)
+	sevenasendsmonth = models.IntegerField(editable=False)
+	sixcplussendsmonth = models.IntegerField(editable=False)
+	sixcsendsmonth = models.IntegerField(editable=False)
+	sixbplussendsmonth = models.IntegerField(editable=False)
 	eightbsends = models.IntegerField(editable=False)
 	eightaplussends = models.IntegerField(editable=False)
 	eightasends = models.IntegerField(editable=False)
@@ -116,6 +133,19 @@ class UserDetails(models.Model):
 	sixcsends = models.IntegerField(editable=False)
 	sixbplussends = models.IntegerField(editable=False)
 	def save(self):
+		this_month = datetime.now().month
+		self.eightbsendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=13) & Q(date__month=this_month)).count()
+		self.eightaplussendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=12) & Q(date__month=this_month)).count()
+		self.eightasendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=11) & Q(date__month=this_month)).count()
+		self.sevencplussendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=10) & Q(date__month=this_month)).count()
+		self.sevencsendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=9) & Q(date__month=this_month)).count()
+		self.sevenbplussendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=8) & Q(date__month=this_month)).count()
+		self.sevenbsendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=7) & Q(date__month=this_month)).count()
+		self.sevenaplussendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=6) & Q(date__month=this_month)).count()
+		self.sevenasendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=5) & Q(date__month=this_month)).count()
+		self.sixcplussendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=4) & Q(date__month=this_month)).count()
+		self.sixcsendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=3) & Q(date__month=this_month)).count()
+		self.sixbplussendsmonth = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=2) & Q(date__month=this_month)).count()
 		self.eightbsends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=13)).count()
 		self.eightaplussends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=12)).count()
 		self.eightasends = UserLog.objects.filter(Q(user_id=self.user.id) & Q(personal_grade=11)).count()
