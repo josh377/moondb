@@ -31,7 +31,7 @@ class Climb(models.Model):
 	name = models.CharField(max_length=255, unique=True)
 	grade = models.IntegerField(choices=GRADES)
 	stars = models.IntegerField(choices=STARS, null=True)
-	global_repeats = models.IntegerField(blank=True)
+	global_repeats = models.IntegerField(null=True)
 	slug = models.SlugField(unique=True)
 	date = models.DateTimeField(auto_now_add=True)
 	canvas = models.BooleanField(default=False)
