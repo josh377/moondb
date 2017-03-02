@@ -163,7 +163,7 @@ def user_list(request):
 		if searchsort == 'sortname':
 			qs = qs.order_by('first_name')
 		if searchsort == 'sortsends':
-			qs = qs.order_by('sendcount')
+			qs = qs.order_by('-sendcount')
 		if searchsort == 'sortvideos':
 			qs = qs.order_by('-videocount')
 	else:
