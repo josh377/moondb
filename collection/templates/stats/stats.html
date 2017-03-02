@@ -22,10 +22,10 @@
 			{% for monthpoints in monthpoints %}
 			<tr>
 				<td>
-				<a href="/users/{{ monthpoints.user.id }}">{{ monthpoints.first_name }} {{ monthpoints.last_name }}</a>
+				<a href="/users/{{ monthpoints.id }}">{{ monthpoints.userdetails.first_name }} {{ monthpoints.userdetails.last_name }}</a>
 				</td>
 				<td>
-				{{ monthpoints.monthpoints }}
+				{{ monthpoints.totalpoints }}
 				</td>
 			</tr>
 			{% endfor %}
@@ -72,7 +72,7 @@
 			{% for totalpoints in totalpoints %}
 			<tr>
 				<td>
-				<a href="/users/{{ totalpoints.user.id }}">{{ totalpoints.first_name }} {{ totalpoints.last_name }}</a>
+				<a href="/users/{{ totalpoints.userdetails.id }}">{{ totalpoints.userdetails.first_name }} {{ totalpoints.userdetails.last_name }}</a>
 				</td>
 				<td>
 				{{ totalpoints.totalpoints }}
@@ -107,7 +107,6 @@
 		</td>
 	</tr>
 </table>
-
 
 
 	
