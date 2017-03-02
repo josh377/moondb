@@ -180,8 +180,10 @@ def user_list(request):
 def climb_list(request):
 	userlist = User.objects.order_by('id')
 	currentuser = request.user
+	videocount = Video.objects.all().count()
 	if request.GET:
 		qs = Climb.objects.all().prefetch_related('users')
+		climbcount = qs.count()
 		qs = qs.annotate(videocount=Count('video', distinct=True)).annotate(starsavg=Avg('userlog__stars', distinct=True)).annotate(gradeavg=Avg('userlog__personal_grade', distinct=True)).annotate(localrepeats=Count('userlog'))
 		climbheader = 'Climbs'
 		searchname = request.GET.get('name', '')
@@ -215,6 +217,8 @@ def climb_list(request):
 			qs = qs.filter(starsavg__gte=1)
 		if searchsort == 'sortgrade':
 			qs = qs.order_by('-grade')
+		if searchsort == 'sortglobalrepeats':
+			qs = qs.order_by('-global_repeats')
 		if searchsort == 'sortname':
 			qs = qs.order_by('name')
 		if searchsort == 'sortlocalrepeats':
@@ -223,8 +227,10 @@ def climb_list(request):
 			qs = qs.order_by('-starsavg')
 		if searchsort == 'sortvideos':
 			qs = qs.order_by('-videocount')
+		
 	else:
 		qs = Climb.objects.none().prefetch_related('users')
+		climbcount = Climb.objects.all().count()
 		climbheader = ''
 		users = UserLog.objects.none()
 		
@@ -232,6 +238,8 @@ def climb_list(request):
 		'climb': qs,
 		'userlist': userlist,
 		'climbheader': climbheader,
+		'climbcount': climbcount,
+		'videocount': videocount,
 })
 
 

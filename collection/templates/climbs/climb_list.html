@@ -78,6 +78,8 @@
 		<td>
 		<h5>Sort By: <select name="sortby">
 		<option value="sortgrade" selected>Grade</option>
+		<option value="sortglobalrepeats">Most Global Repeats</option>
+		<option value="sortglobalstars">Most Global Stars</option>
 		<option value="sortlocalrepeats">Most Local Repeats</option>
 		<option value="sortlocalstars">Highest Local Rating</option>
 		<option value="sortvideos">Most Videos</option>
@@ -89,9 +91,10 @@
 		<input type="submit" value="Search"/>
 		</td>
 		<td>
+		<font size=1><b>Total Climbs in Database: {{ climbcount }}</b></font>
 		</td>
 		<td>
-		
+		<font size=1><b>Total Videos in Database: {{ videocount }}</b></font>
 		</td>
 	</tr>
 </table>
@@ -140,7 +143,9 @@
 	</tr>
 	<tr>
 		<td valign="top"><b>Global Grade:</b> {{ climb.get_grade_display }}<br>
+		<br><b>Global Repeats:</b> {{ climb.global_repeats }}<br>
 		<br>{% if climb.stars != NULL %}<b>Global Stars:</b>  <img src="/static/images/{{ climb.stars }}star.jpg" height="20">{% endif %}<br>
+		
 		<br><br><br>
 		<b>Local Grade:</b> 
 		{% if climb.gradeavg|floatformat:"0" == '13' %}8b{% endif %}
