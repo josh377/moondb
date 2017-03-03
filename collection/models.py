@@ -109,17 +109,17 @@ class UserDetails(models.Model):
 	ape_index = models.CharField("Ape Index", max_length=255, blank=True)
 	moonboardlocation = models.CharField("Moonboard Location", max_length=255, blank=True)
 	sevencsends = models.IntegerField(null=True)
-	sixbplussends = models.IntegerField
-	sixcsends = models.IntegerField
-	sixcplussends = models.IntegerField
-	sevenasends = models.IntegerField
-	sevenaplussends = models.IntegerField
-	sevenbsends = models.IntegerField
-	sevenbsends = models.IntegerField
-	sevencplussends = models.IntegerField
-	eightasends = models.IntegerField
-	eightaplussends = models.IntegerField
-	eightbsends = models.IntegerField
+	sixbplussends = models.IntegerField(null=True)
+	sixcsends = models.IntegerField(null=True)
+	sixcplussends = models.IntegerField(null=True)
+	sevenasends = models.IntegerField(null=True)
+	sevenaplussends = models.IntegerField(null=True)
+	sevenbsends = models.IntegerField(null=True)
+	sevenbsends = models.IntegerField(null=True)
+	sevencplussends = models.IntegerField(null=True)
+	eightasends = models.IntegerField(null=True)
+	eightaplussends = models.IntegerField(null=True)
+	eightbsends = models.IntegerField(null=True)
 	
 	
 	
