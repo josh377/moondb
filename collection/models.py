@@ -109,6 +109,18 @@ class UserDetails(models.Model):
 	ape_index = models.CharField("Ape Index", max_length=255, blank=True)
 	moonboardlocation = models.CharField("Moonboard Location", max_length=255, blank=True)
 	sevencsends = models.IntegerField(null=True)
+	sixbplussends = models.IntegerField
+	sixcsends = models.IntegerField
+	sixcplussends = models.IntegerField
+	sevenasends = models.IntegerField
+	sevenaplussends = models.IntegerField
+	sevenbsends = models.IntegerField
+	sevenbsends = models.IntegerField
+	sevencplussends = models.IntegerField
+	eightasends = models.IntegerField
+	eightaplussends = models.IntegerField
+	eightbsends = models.IntegerField
+	
 	
 	
 	
