@@ -115,7 +115,7 @@ class UserDetails(models.Model):
 	sevenasends = models.IntegerField(null=True)
 	sevenaplussends = models.IntegerField(null=True)
 	sevenbsends = models.IntegerField(null=True)
-	sevenbsends = models.IntegerField(null=True)
+	sevenbplussends = models.IntegerField(null=True)
 	sevencplussends = models.IntegerField(null=True)
 	eightasends = models.IntegerField(null=True)
 	eightaplussends = models.IntegerField(null=True)
