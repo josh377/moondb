@@ -108,6 +108,7 @@ class UserDetails(models.Model):
 	weight = models.CharField(max_length=255, blank=True)
 	ape_index = models.CharField("Ape Index", max_length=255, blank=True)
 	moonboardlocation = models.CharField("Moonboard Location", max_length=255, blank=True)
+	sevencsends = models.IntegerField(null=True)
 	
 	
 	
