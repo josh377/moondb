@@ -120,6 +120,18 @@ class UserDetails(models.Model):
 	eightasends = models.IntegerField(null=True)
 	eightaplussends = models.IntegerField(null=True)
 	eightbsends = models.IntegerField(null=True)
+	sevencsendsmonth = models.IntegerField(null=True)
+	sixbplussendsmonth = models.IntegerField(null=True)
+	sixcsendsmonth = models.IntegerField(null=True)
+	sixcplussendsmonth = models.IntegerField(null=True)
+	sevenasendsmonth = models.IntegerField(null=True)
+	sevenaplussendsmonth = models.IntegerField(null=True)
+	sevenbsendsmonth = models.IntegerField(null=True)
+	sevenbplussendsmonth = models.IntegerField(null=True)
+	sevencplussendsmonth = models.IntegerField(null=True)
+	eightasendsmonth = models.IntegerField(null=True)
+	eightaplussendsmonth = models.IntegerField(null=True)
+	eightbsendsmonth = models.IntegerField(null=True)
 	
 	
 	
