@@ -389,4 +389,15 @@ def logout_view(request):
 	return render(request, 'registration/logout.html')
 
 	
+def video_delete(request, slug, videoid):
+	video = Video.objects.get(id=videoid)
+	climb = Climb.objects.get(slug=slug)
+	return render(request, "videos/video_delete.html", {
+		'video': video,
+		'climb': climb,
+})
+	
+def video_delete_confirm(request, slug, videoid):
+	Video.objects.get(id=videoid).delete()
+	return redirect('climb_detail', slug=slug)
 
