@@ -189,7 +189,7 @@ def climb_list(request):
 	searchlocalstars = ""
 	searchsort = ""
 	searchexcludemine = ""
-	searchvideosonly = ""
+	searchvideosonly = "true"
 	if request.GET:
 		qs = Climb.objects.all().prefetch_related('users')
 		climbcount = qs.count()
