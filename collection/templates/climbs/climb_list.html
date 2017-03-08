@@ -16,82 +16,84 @@
 <table border=0 width=975>
 	<tr>
 		<td width="300">
-		<h5>Name: <input type="text" name = "name"></h5>
+		<h5>Name: <input type="text" name = "name" value="{% if searchname %}{{ searchname }}{% endif %}"></input></h5>
 		</td>
 		<td width="300"><h5>Sent By: 
 		<select name="sentby">
-		<option value="" selected>All</option>
+		<option value="">All</option>
 		{% for userlist in userlist %}
-		<option value="{{ userlist.id }}">{{ userlist.userdetails.first_name }} {{ userlist.userdetails.last_name }}</option>
+		<option value="{{ userlist.id }}" {% if searchsentbyint == userlist.id %}selected{% endif %}>{{ userlist.userdetails.first_name }} {{ userlist.userdetails.last_name }}</option>
+		
 		{% endfor %}
 		</select> </h5>
 		</td>
-		<td width="300"><h5>Exclude My Sends: &#160&#160<input type="checkbox" name="excludemine" value="true"></h5>
+		<td width="300"><h5>Exclude My Sends: &#160&#160<input type="checkbox" name="excludemine" value="true" {% if searchexcludemine %}checked{% endif %}></h5>
 		</td>
 	</tr>
 	<tr>
 		<td>
 		<h5>Grade:	<select name="grade">
-		<option value="" selected>All</option>
-		<option value="13">8b</option>
-		<option value="12">8a+</option>
-		<option value="11">8a</option>
-		<option value="10">7c+</option>
-		<option value="9">7c</option>
-		<option value="8.25">7b+</option>
-		<option value="7.75">7b</option>
-		<option value="7">7a+</option>
-		<option value="6">7a</option>
-		<option value="5">6c+</option>
-		<option value="4">6c</option>
-		<option value="3">6b+</option>
+		<option value="" {% if searchgrade == "" %}selected{% endif %}>All</option>
+		<option value="13" {% if searchgrade == "13" %}selected{% endif %}>8b</option>
+		<option value="12" {% if searchgrade == "12" %}selected{% endif %}>8a+</option>
+		<option value="11" {% if searchgrade == "11" %}selected{% endif %}>8a</option>
+		<option value="10" {% if searchgrade == "10" %}selected{% endif %}>7c+</option>
+		<option value="9" {% if searchgrade == "9" %}selected{% endif %}>7c</option>
+		<option value="8" {% if searchgrade == "8" %}selected{% endif %}>7b+</option>
+		<option value="7" {% if searchgrade == "7" %}selected{% endif %}>7b</option>
+		<option value="6" {% if searchgrade == "6" %}selected{% endif %}>7a+</option>
+		<option value="5" {% if searchgrade == "5" %}selected{% endif %}>7a</option>
+		<option value="4" {% if searchgrade == "4" %}selected{% endif %}>6c+</option>
+		<option value="3" {% if searchgrade == "3" %}selected{% endif %}>6c</option>
+		<option value="2" {% if searchgrade == "2" %}selected{% endif %}>6b+</option>
 		</select></h5>
 		</td>
 		<td><h5>Recommended By: 
 		<select name="recby">
 		<option value="" selected>---</option>
 		{% for userlist in userlist %}
-		<option value="{{ userlist.id }}">{{ userlist.userdetails.first_name }} {{ userlist.userdetails.last_name }}</option>
+		<option value="{{ userlist.id }}" {% if searchrecommendedint == userlist.id %}selected{% endif %}>{{ userlist.userdetails.first_name }} {{ userlist.userdetails.last_name }}</option>
 		{% endfor %}
 		</select> </h5>
 		</td>
-		<td width="300"><h5>Only Climbs With Videos:&#160&#160 <input type="checkbox" name="videosonly" value="true" checked></h5>
+		<td width="300"><h5>Only Climbs With Videos:&#160&#160 <input type="checkbox" name="videosonly" value="true" {% if searchvideosonly %}checked{% endif %}></h5>
 		</td>
 	</tr>
 	<tr>
 		<td>
 		<h5>Stars: <select name="globalstars">
-		<option value="" selected>All</option>
-		<option value="3">3</option>
-		<option value="2">2</option>
-		<option value="1">1</option>
-		<option value="0">0</option>
+		<option value="" {% if searchglobalstars == "" %}selected{% endif %}>All</option>
+		<option value="3" {% if searchglobalstars == "3" %}selected{% endif %}>3</option>
+		<option value="2" {% if searchglobalstars == "2" %}selected{% endif %}>2</option>
+		<option value="1" {% if searchglobalstars == "1" %}selected{% endif %}>1</option>
+		<option value="0" {% if searchglobalstars == "0" %}selected{% endif %}>0</option>
 		</select>
 		</h5>
 		</td>
 		<td>
 		<h5>Local Stars: <select name="localstars">
-		<option value="" selected>All</option>
-		<option value="3">3 stars</option>
-		<option value="2">2 stars (or more)</option>
-		<option value="1">1 star (or more)</option)
+		<option value="" {% if searchlocalstars == "" %}selected{% endif %}>All</option>
+		<option value="3"{% if searchlocalstars == "3" %}selected{% endif %}>3 stars</option>
+		<option value="2"{% if searchlocalstars == "2" %}selected{% endif %}>2 stars (or more)</option>
+		<option value="1"{% if searchlocalstars == "1" %}selected{% endif %}>1 star (or more)</option)
 		</select></h5>
 		</td>
 		<td>
 		<h5>Sort By: <select name="sortby">
-		<option value="sortgrade" selected>Grade</option>
-		<option value="sortglobalrepeats">Most Global Repeats</option>
-		<option value="sortglobalstars">Most Global Rating</option>
-		<option value="sortlocalrepeats">Most Local Repeats</option>
-		<option value="sortlocalstars">Highest Local Rating</option>
-		<option value="sortvideos">Most Videos</option>
-		<option value="sortrecent">Recently Added</option>
+		<option value="sortgrade" {% if searchsort == "sortgrade" %}selected{% endif %}>Grade</option>
+		<option value="sortglobalrepeats"{% if searchsort == "sortglobalrepeats" %}selected{% endif %}>Most Global Repeats</option>
+		<option value="sortglobalstars"{% if searchsort == "sortglobalstars" %}selected{% endif %}>Highest Global Rating</option>
+		<option value="sortlocalrepeats"{% if searchsort == "sortlocalrepeats" %}selected{% endif %}>Most Local Repeats</option>
+		<option value="sortlocalstars"{% if searchsort == "sortlocalstars" %}selected{% endif %}>Highest Local Rating</option>
+		<option value="sortvideos"{% if searchsort == "sortvideos" %}selected{% endif %}>Most Videos</option>
+		<option value="sortrecent"{% if searchsort == "sortrecent" %}selected{% endif %}>Recently Added</option>
 		</select></h5>
+		
 		</td>
 	</tr>
 	<tr>
 		<td>
-		<input type="submit" value="Search"/>
+		<input type="submit" value="Search"/>&#160&#160&#160<a href="/climb_list/">[ Reset ]</a>
 		</td>
 		<td>
 		

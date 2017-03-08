@@ -181,6 +181,15 @@ def climb_list(request):
 	userlist = User.objects.order_by('id')
 	currentuser = request.user
 	videocount = Video.objects.all().count()
+	searchname = ""
+	searchgrade = ""
+	searchglobalstars = ""
+	searchsentbyint = ""
+	searchrecommendedint = ""
+	searchlocalstars = ""
+	searchsort = ""
+	searchexcludemine = ""
+	searchvideosonly = ""
 	if request.GET:
 		qs = Climb.objects.all().prefetch_related('users')
 		climbcount = qs.count()
@@ -189,7 +198,9 @@ def climb_list(request):
 		searchname = request.GET.get('name', '')
 		searchgrade = request.GET.get('grade', '')
 		searchsentby = request.GET.get('sentby', '')
+		searchsentbyint = int('0'+ searchsentby)
 		searchrecommended = request.GET.get('recby', '')
+		searchrecommendedint = int('0' + searchrecommended)
 		searchexcludemine = request.GET.get('excludemine', '')
 		searchvideosonly = request.GET.get('videosonly', '')
 		searchglobalstars = request.GET.get('globalstars', '')
@@ -244,6 +255,15 @@ def climb_list(request):
 		'climbheader': climbheader,
 		'climbcount': climbcount,
 		'videocount': videocount,
+		'searchname': searchname,
+		'searchgrade': searchgrade,
+		'searchglobalstars': searchglobalstars,
+		'searchsentbyint': searchsentbyint,
+		'searchrecommendedint': searchrecommendedint,
+		'searchlocalstars': searchlocalstars,
+		'searchsort': searchsort,
+		'searchexcludemine': searchexcludemine,
+		'searchvideosonly': searchvideosonly
 })
 
 
